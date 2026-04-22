@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Spices & Masala",
+    "slug": "spices-masala",
+    "emoji": "🌶️",
+    "itemCount": 92
+  },
+  {
+    "name": "Pasta, Noodles & Vermicelli",
+    "slug": "pasta-noodles-vermicelli",
+    "emoji": "🍝",
+    "itemCount": 21
+  },
+  {
+    "name": "Personal Care & Hygiene",
+    "slug": "personal-care-hygiene",
+    "emoji": "🧼",
+    "itemCount": 67
+  },
+  {
+    "name": "Tea, Coffee & Hot Beverages",
+    "slug": "tea-coffee-hot-beverages",
+    "emoji": "☕",
+    "itemCount": 40
+  },
+  {
+    "name": "Cooking Oils & Ghee",
+    "slug": "cooking-oils-ghee",
+    "emoji": "🛢️",
+    "itemCount": 11
+  },
+  {
+    "name": "Sauces, Pickles & Condiments",
+    "slug": "sauces-pickles-condiments",
+    "emoji": "🥫",
+    "itemCount": 54
+  },
+  {
+    "name": "Dairy Products",
+    "slug": "dairy-products",
+    "emoji": "🥛",
+    "itemCount": 32
+  },
+  {
+    "name": "Biscuits, Snacks & Namkeen",
+    "slug": "biscuits-snacks-namkeen",
+    "emoji": "🍪",
+    "itemCount": 37
+  },
+  {
+    "name": "Breakfast & Health Foods",
+    "slug": "breakfast-health-foods",
+    "emoji": "🥣",
+    "itemCount": 11
+  },
+  {
+    "name": "Soft Drinks, Juices & Beverages",
+    "slug": "soft-drinks-juices-beverages",
+    "emoji": "🥤",
+    "itemCount": 53
+  },
+  {
+    "name": "Bread, Bakery & Sweets",
+    "slug": "bread-bakery-sweets",
+    "emoji": "🍞",
+    "itemCount": 24
+  },
+  {
+    "name": "Baking Ingredients & Essences",
+    "slug": "baking-ingredients-essences",
+    "emoji": "🧁",
+    "itemCount": 20
+  },
+  {
+    "name": "Pulses & Legumes",
+    "slug": "pulses-legumes",
+    "emoji": "🫘",
+    "itemCount": 13
+  },
+  {
+    "name": "Ready Mixes, Soups & Convenience Foods",
+    "slug": "ready-mixes-soups-convenience-foods",
+    "emoji": "🍲",
+    "itemCount": 28
+  },
+  {
+    "name": "Flours, Grains & Staples",
+    "slug": "flours-grains-staples",
+    "emoji": "🌾",
+    "itemCount": 46
+  },
+  {
+    "name": "Rice & Rice Products",
+    "slug": "rice-rice-products",
+    "emoji": "🍚",
+    "itemCount": 10
+  },
+  {
+    "name": "Dry Fruits & Nuts",
+    "slug": "dry-fruits-nuts",
+    "emoji": "🥜",
+    "itemCount": 27
+  },
+  {
+    "name": "Household Cleaning & Laundry",
+    "slug": "household-cleaning-laundry",
+    "emoji": "🧹",
+    "itemCount": 64
+  },
+  {
+    "name": "Agarbathi, Puja & Home Essentials",
+    "slug": "agarbathi-puja-home-essentials",
+    "emoji": "🪔",
+    "itemCount": 20
+  },
+  {
+    "name": "Frozen Foods & Ice Cream",
+    "slug": "frozen-foods-ice-cream",
+    "emoji": "🍦",
+    "itemCount": 29
+  }
+]
