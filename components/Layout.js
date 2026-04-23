@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function Layout({ children, categories = [] }) {
-  const { cartCount } = useCart();
+  const { cartCount, settings } = useCart();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -21,7 +21,7 @@ export default function Layout({ children, categories = [] }) {
       <header className="sticky top-0 w-full flex items-center justify-between px-4 py-2 bg-white z-50 shadow-sm border-b border-gray-100">
         <div className="flex items-center gap-6">
           <Link href="/">
-            <span className="text-2xl font-black tracking-tighter text-violet-600 cursor-pointer">Alfajr Super Mart</span>
+            <span className="text-2xl font-black tracking-tighter text-violet-600 cursor-pointer">{settings?.storeName || "Alfajr Super Mart"}</span>
           </Link>
           <div className="hidden md:flex items-center gap-1 bg-surface-container-low px-3 py-1.5 rounded-lg cursor-default">
             <span className="material-symbols-outlined text-primary text-[20px]" data-icon="location_on">location_on</span>

@@ -1,9 +1,15 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { getSettings } from '@/lib/products';
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
+  const [settings, setSettings] = useState({
+    storeName: "Alfajr Super Mart",
+    whatsappNumber: "+919449546882",
+    adminEmail: "Sanaullaa19@gmail.com"
+  });
 
   // Load from localStorage
   useEffect(() => {
@@ -11,6 +17,19 @@ export function CartProvider({ children }) {
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
+
+    // Fetch store settings
+    async function fetchSettings() {
+      try {
+        const data = await getSettings();
+        if (data) {
+          setSettings(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch settings:", err);
+      }
+    }
+    fetchSettings();
   }, []);
 
   // Save to localStorage
@@ -50,7 +69,7 @@ export function CartProvider({ children }) {
   const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, cartTotal, cartCount }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, cartTotal, cartCount, settings }}>
       {children}
     </CartContext.Provider>
   );

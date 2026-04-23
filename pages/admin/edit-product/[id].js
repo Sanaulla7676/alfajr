@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import AdminLayout from "@/components/AdminLayout";
 import { getCategories, getProductById, updateProduct } from "@/lib/products";
-import { storage } from "@/lib/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/router";
 
 export default function EditProduct() {
@@ -74,9 +72,26 @@ export default function EditProduct() {
     try {
       let imageUrl = formData.imageUrl;
       if (image) {
-        const storageRef = ref(storage, `products/${Date.now()}_${image.name}`);
-        const snapshot = await uploadBytes(storageRef, image);
-        imageUrl = await getDownloadURL(snapshot.ref);
+        // Convert file to base64 and upload via Cloudinary API route
+        const reader = new FileReader();
+        imageUrl = await new Promise((resolve, reject) => {
+          reader.onloadend = async () => {
+            try {
+              const res = await fetch("/api/upload-image", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data: reader.result }),
+              });
+              const json = await res.json();
+              if (!res.ok) throw new Error(json.error || "Upload failed");
+              resolve(json.url);
+            } catch (err) {
+              reject(err);
+            }
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(image);
+        });
       }
 
       const selectedCat = categories.find(c => c.name === formData.category);

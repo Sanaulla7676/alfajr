@@ -4,7 +4,7 @@ import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/router";
 
 export default function CartPage() {
-  const { cart, addToCart, removeFromCart, clearCart, cartTotal } = useCart();
+  const { cart, addToCart, removeFromCart, clearCart, cartTotal, settings } = useCart();
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
@@ -25,9 +25,9 @@ export default function CartPage() {
       return;
     }
 
-    const whatsappNumber = "+919449546882";
+    const whatsappNumber = settings.whatsappNumber || "+919449546882";
     
-    let message = `🛒 *New Order — Alfajr Super Mart*\n━━━━━━━━━━━━━━━━\n`;
+    let message = `🛒 *New Order — ${settings.storeName || "Alfajr Super Mart"}*\n━━━━━━━━━━━━━━━━\n`;
     cart.forEach(item => {
       message += `- ${item.name} (${item.unit || "1 unit"}) × ${item.quantity} = ₹${(item.price * item.quantity)}\n`;
     });
@@ -40,7 +40,7 @@ export default function CartPage() {
     message += `📞 *Phone:* ${formData.phone}\n`;
     message += `📍 *Address:* ${formData.address}\n`;
     message += `━━━━━━━━━━━━━━━━\n`;
-    message += `_Sent from Alfajr Super Mart_`;
+    message += `_Sent from ${settings.storeName || "Alfajr Super Mart"}_`;
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;

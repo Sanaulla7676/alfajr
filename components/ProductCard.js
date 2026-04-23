@@ -47,9 +47,15 @@ export default function ProductCard({ product }) {
         
         <div className="mt-auto flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-price-lg text-on-surface">₹{product.price}</span>
-            {product.originalPrice && product.originalPrice > product.price && (
-              <span className="text-price-sm text-outline line-through">₹{product.originalPrice}</span>
+            {product.price > 0 ? (
+              <>
+                <span className="text-price-lg text-on-surface">₹{product.price}</span>
+                {product.originalPrice && product.originalPrice > product.price && (
+                  <span className="text-price-sm text-outline line-through">₹{product.originalPrice}</span>
+                )}
+              </>
+            ) : (
+              <span className="text-body-sm font-bold text-primary italic">Price on Request</span>
             )}
           </div>
 
@@ -66,7 +72,12 @@ export default function ProductCard({ product }) {
           ) : (
             <button 
               onClick={handleAdd}
-              className="h-9 px-4 rounded-lg border border-[#2ED573] text-[#2ED573] font-bold text-body-md bg-white hover:bg-[#2ED573]/5 active:scale-95 transition-all"
+              disabled={product.price <= 0}
+              className={`h-9 px-4 rounded-lg border font-bold text-body-md bg-white transition-all ${
+                product.price > 0 
+                ? 'border-[#2ED573] text-[#2ED573] hover:bg-[#2ED573]/5 active:scale-95' 
+                : 'border-gray-200 text-gray-400 cursor-not-allowed opacity-50'
+              }`}
             >
               ADD
             </button>
