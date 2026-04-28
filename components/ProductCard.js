@@ -43,7 +43,10 @@ export default function ProductCard({ product }) {
 
       <div className="flex flex-col flex-1">
         <h4 className="font-h3 text-on-surface line-clamp-2 mb-0.5">{product.name}</h4>
-        <p className="text-body-sm text-outline mb-3">{product.unit || "1 unit"}</p>
+        {product.description && (
+          <p className="text-[11px] text-outline line-clamp-2 mb-2 leading-snug">{product.description}</p>
+        )}
+        <p className="text-body-sm text-outline font-medium mb-3 bg-surface-container-low w-fit px-2 py-0.5 rounded">{product.unit || "1 unit"}</p>
         
         <div className="mt-auto flex items-center justify-between">
           <div className="flex flex-col">
