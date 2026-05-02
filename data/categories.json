@@ -3,12 +3,14 @@
     "name": "Rice & Rice Products",
     "slug": "rice-rice-products",
     "emoji": "🍚",
+    "image": "/images/categories/rice.png",
     "itemCount": 10
   },
   {
     "name": "Cooking Oils & Ghee",
     "slug": "cooking-oils-ghee",
     "emoji": "🛢️",
+    "image": "/images/categories/oil.png",
     "itemCount": 11
   },
   {
@@ -117,6 +119,7 @@
     "name": "Home Essentials",
     "slug": "home-essentials",
     "emoji": "🪔",
+    "image": "/images/categories/home-essentials.png",
     "itemCount": 20
   }
 ]
