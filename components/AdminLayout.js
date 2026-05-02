@@ -44,6 +44,7 @@ export default function AdminLayout({ children, activePage }) {
   const menuItems = [
     { name: "Dashboard", icon: "dashboard", href: "/admin/dashboard", id: "dashboard" },
     { name: "Products", icon: "inventory_2", href: "/admin/products", id: "products" },
+    { name: "Categories", icon: "category", href: "/admin/categories", id: "categories" },
     { name: "Add Product", icon: "add_circle", href: "/admin/add-product", id: "add-product" },
     { name: "Settings", icon: "settings", href: "/admin/settings", id: "settings" }
   ];
