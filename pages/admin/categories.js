@@ -25,6 +25,31 @@ export default function ManageCategories() {
     setCategories(categories.map(c => c.id === id ? { ...c, name: newName } : c));
   };
 
+  const handleImageUpload = async (id, file) => {
+    if (!file) return;
+    setSaving(true);
+    try {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        const response = await fetch("/api/upload-image", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: reader.result }),
+        });
+        const data = await response.json();
+        if (data.url) {
+          setCategories(prev => prev.map(c => c.id === id ? { ...c, image: data.url } : c));
+        }
+      };
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      alert("Failed to upload image.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const moveUp = (index) => {
     if (index === 0) return;
     const newCategories = [...categories];
@@ -43,7 +68,7 @@ export default function ManageCategories() {
     setSaving(true);
     try {
       const promises = categories.map((cat, index) => 
-        updateCategory(cat.id, { name: cat.name, order: index })
+        updateCategory(cat.id, { name: cat.name, order: index, image: cat.image || "" })
       );
       await Promise.all(promises);
       alert("Categories updated successfully!");
@@ -90,8 +115,23 @@ export default function ManageCategories() {
                       <span className="material-symbols-outlined text-[20px]">keyboard_arrow_down</span>
                     </button>
                   </div>
-                  <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl border border-gray-100 overflow-hidden">
-                     {cat.image ? <img src={cat.image} className="w-full h-full object-cover" /> : cat.emoji}
+                  <div className="relative group/img cursor-pointer">
+                    <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl border border-gray-100 overflow-hidden">
+                       {cat.image ? (
+                         <img src={cat.image} className="w-full h-full object-cover" />
+                       ) : (
+                         <span className="text-xl">{cat.emoji}</span>
+                       )}
+                    </div>
+                    <label className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 flex items-center justify-center cursor-pointer transition-opacity">
+                      <span className="material-symbols-outlined text-white text-[20px]">add_a_photo</span>
+                      <input 
+                        type="file" 
+                        className="hidden" 
+                        accept="image/*"
+                        onChange={(e) => handleImageUpload(cat.id, e.target.files[0])}
+                      />
+                    </label>
                   </div>
                   <div className="flex-1 relative group/input">
                     <input 
