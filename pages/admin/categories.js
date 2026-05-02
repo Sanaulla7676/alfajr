@@ -93,12 +93,16 @@ export default function ManageCategories() {
                   <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl border border-gray-100 overflow-hidden">
                      {cat.image ? <img src={cat.image} className="w-full h-full object-cover" /> : cat.emoji}
                   </div>
-                  <input 
-                    type="text" 
-                    value={cat.name}
-                    onChange={(e) => handleRename(cat.id, e.target.value)}
-                    className="flex-1 bg-transparent font-bold text-on-surface text-lg border-none focus:ring-0 outline-none p-0"
-                  />
+                  <div className="flex-1 relative group/input">
+                    <input 
+                      type="text" 
+                      value={cat.name}
+                      onChange={(e) => handleRename(cat.id, e.target.value)}
+                      className="w-full bg-surface-container-low hover:bg-surface-container font-bold text-on-surface text-lg rounded-xl px-4 py-2 border-2 border-transparent focus:border-primary outline-none transition-all"
+                      placeholder="Category Name"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline opacity-0 group-hover/input:opacity-100 pointer-events-none transition-opacity">edit</span>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                    <span className="text-[10px] font-black text-outline uppercase tracking-widest bg-surface-container-low px-2 py-1 rounded-md">Order: {index + 1}</span>
