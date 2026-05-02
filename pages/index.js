@@ -62,16 +62,36 @@ export default function Home() {
               style={{ transform: `translateX(-${currentBanner * 100}%)` }}
             >
               {settings.banners.map((banner, idx) => (
-                <div key={idx} className="min-w-full h-full px-4">
+                <div key={idx} className="min-w-full h-full px-4 relative">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 
                     src={banner} 
                     alt={`Banner ${idx + 1}`} 
                     className="w-full h-full object-cover rounded-2xl shadow-sm"
                   />
+                  <div className="absolute bottom-6 left-10 z-10">
+                    <button className="bg-white text-black px-8 py-3 rounded-full font-black text-sm uppercase shadow-xl hover:scale-105 transition-all active:scale-95 border-2 border-black/5">
+                      Buy Now
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
+            
+            {/* Carousel Indicators */}
+            {settings.banners.length > 1 && (
+              <div className="absolute bottom-6 right-10 flex gap-2 z-20">
+                {settings.banners.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentBanner(idx)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      currentBanner === idx ? "bg-white w-6 shadow-md" : "bg-white/40"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <div className="px-4">
@@ -80,8 +100,8 @@ export default function Home() {
                 <span className="text-amber-300 font-black text-sm uppercase tracking-widest mb-2 block">ROYAL MANGO FESTIVAL</span>
                 <h2 className="text-2xl md:text-3xl font-black mb-2 leading-tight">Sweetest arrivals, delivered in 30 mins!</h2>
                 <p className="text-white/70 text-xs mb-4">Freshness Guaranteed.</p>
-                <button className="bg-white text-[#0A4D3C] px-6 py-2 rounded-full font-black text-xs uppercase shadow-lg active:scale-95 transition-all">
-                  Shop Now
+                <button className="bg-white text-[#0A4D3C] px-8 py-3 rounded-full font-black text-sm uppercase shadow-lg active:scale-95 transition-all hover:scale-105">
+                  Buy Now
                 </button>
               </div>
               <div className="absolute right-0 top-0 h-full w-1/2 flex items-center justify-end">

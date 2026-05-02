@@ -50,7 +50,7 @@ export default function Layout({ children, categories = [] }) {
               <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-black" data-icon="search">search</span>
               <input 
                 className="w-full bg-white border-none px-10 py-3 rounded-xl text-sm font-medium shadow-sm outline-none" 
-                placeholder='Search for "Milk"' 
+                placeholder='Search for Groceries' 
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}

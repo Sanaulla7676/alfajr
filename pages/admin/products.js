@@ -103,9 +103,10 @@ export default function AdminProducts() {
         </div>
       </div>
 
-      {/* Products Table */}
-      <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="overflow-x-auto">
+      {/* Products List */}
+      <div className="bg-white lg:rounded-3xl lg:shadow-sm lg:border lg:border-gray-100 overflow-hidden">
+        {/* Desktop Table View */}
+        <div className="hidden lg:block overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="bg-surface-container-lowest border-b border-gray-50">
@@ -181,6 +182,73 @@ export default function AdminProducts() {
             </tbody>
           </table>
         </div>
+
+        {/* Mobile Card View */}
+        <div className="lg:hidden divide-y divide-gray-100">
+           {filteredProducts.map((p) => (
+             <div key={p.id} className="p-4 flex flex-col gap-4">
+               <div className="flex items-start justify-between gap-4">
+                 <div className="flex items-center gap-3">
+                   <div className="w-14 h-14 bg-gray-100 rounded-xl overflow-hidden shrink-0 border border-gray-50 flex items-center justify-center">
+                     {p.imageUrl ? <img src={p.imageUrl} alt="" className="w-full h-full object-cover" /> : <span className="text-xl font-bold text-gray-400 capitalize">{p.name.charAt(0)}</span>}
+                   </div>
+                   <div className="flex flex-col">
+                     <span className="font-bold text-on-surface line-clamp-2 leading-tight">{p.name}</span>
+                     <span className="text-[10px] text-outline font-medium">{p.category}</span>
+                   </div>
+                 </div>
+                 <div className="flex flex-col items-end gap-1">
+                    {editingPrice?.id === p.id ? (
+                      <input 
+                        type="number"
+                        autoFocus
+                        className="w-16 text-right border-b-2 border-primary outline-none font-black text-primary bg-transparent"
+                        value={editingPrice.value}
+                        onChange={(e) => setEditingPrice({ ...editingPrice, value: e.target.value })}
+                        onBlur={() => handlePriceUpdate(p.id, editingPrice.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handlePriceUpdate(p.id, editingPrice.value)}
+                      />
+                    ) : (
+                      <span 
+                        className="font-black text-on-surface text-lg"
+                        onClick={() => setEditingPrice({ id: p.id, value: p.price })}
+                      >
+                        ₹{p.price}
+                      </span>
+                    )}
+                    <span className="text-[10px] text-outline font-bold uppercase">{p.unit || "Unit"}</span>
+                 </div>
+               </div>
+
+               <div className="flex items-center justify-between bg-surface-container-lowest p-3 rounded-2xl border border-gray-50">
+                  <div className="flex items-center gap-2">
+                    <span className={`text-[10px] font-black uppercase ${p.inStock ? 'text-green-600' : 'text-gray-400'}`}>
+                      {p.inStock ? 'In Stock' : 'Out of Stock'}
+                    </span>
+                    <button 
+                      onClick={() => handleToggleStock(p.id, p.inStock)}
+                      className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none ${p.inStock ? 'bg-green-500' : 'bg-gray-200'}`}
+                    >
+                      <span className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${p.inStock ? 'translate-x-5' : 'translate-x-1'}`} />
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Link href={`/admin/edit-product/${p.id}`}>
+                      <button className="flex items-center gap-1 px-3 py-1.5 bg-violet-50 text-violet-600 rounded-lg text-[10px] font-bold uppercase">
+                        <span className="material-symbols-outlined text-[16px]">edit</span>
+                        Edit
+                      </button>
+                    </Link>
+                    <button onClick={() => handleDelete(p.id, p.name)} className="flex items-center gap-1 px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-[10px] font-bold uppercase">
+                      <span className="material-symbols-outlined text-[16px]">delete</span>
+                      Del
+                    </button>
+                  </div>
+               </div>
+             </div>
+           ))}
+        </div>
+
         {filteredProducts.length === 0 && (
           <div className="p-20 text-center flex flex-col items-center gap-4">
             <span className="material-symbols-outlined text-6xl text-outline-variant">search_off</span>
