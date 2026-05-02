@@ -21,14 +21,14 @@ export default function Layout({ children, categories = [] }) {
       <header className="sticky top-0 w-full bg-[#D1E9FF] z-50">
         <div className="max-w-[1400px] mx-auto px-4 pt-3 pb-2">
           {/* Row 1: Delivery Status & Profile */}
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-black font-bold text-[24px]">bolt</span>
-                <span className="text-xl font-black tracking-tight text-black">10 minutes</span>
+                <span className="material-symbols-outlined text-black font-bold text-[20px]">bolt</span>
+                <span className="text-lg font-black tracking-tight text-black">Super hygenic</span>
               </div>
               <div className="flex items-center gap-1 cursor-pointer">
-                <span className="text-[11px] font-bold text-black/70 truncate max-w-[200px]">Other - 103, floor 2, 86, 18th Main Rd, J...</span>
+                <span className="text-[11px] font-bold text-black/70 truncate max-w-[200px]">RML Nagar 2 nd stage opposite taiba super mart</span>
                 <span className="material-symbols-outlined text-[16px] text-black/70">keyboard_arrow_down</span>
               </div>
             </div>
@@ -39,19 +39,9 @@ export default function Layout({ children, categories = [] }) {
             </Link>
           </div>
 
-          {/* Row 2: Quick Tabs (Horizontal Scroll) */}
-          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide mb-4 -mx-4 px-4">
-            {[
-              { name: "zepto", color: "text-[#8E24AA] bg-white" },
-              { name: "Summer Store", color: "text-[#1E88E5] bg-white" },
-              { name: "Super Mall.", color: "text-[#3949AB] bg-white" },
-              { name: "cafe", color: "text-[#E64A19] bg-[#FFF3E0]", extra: "From ₹39" }
-            ].map((tab, idx) => (
-              <div key={idx} className={`flex-shrink-0 px-4 py-2.5 rounded-xl flex flex-col items-center justify-center min-w-[90px] shadow-sm ${tab.color}`}>
-                <span className="font-black text-sm uppercase tracking-tight leading-none">{tab.name}</span>
-                {tab.extra && <span className="text-[9px] font-bold mt-0.5">{tab.extra}</span>}
-              </div>
-            ))}
+          {/* Row 2: Store Branding */}
+          <div className="mb-4">
+             <h1 className="text-3xl font-black tracking-tighter text-black italic">Alfajr Super <span className="font-medium">mart</span></h1>
           </div>
 
           {/* Row 3: Search Bar */}
@@ -66,13 +56,6 @@ export default function Layout({ children, categories = [] }) {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </form>
-            <div className="hidden sm:flex bg-white p-1 rounded-xl items-center gap-2 shadow-sm min-w-[120px]">
-              <div className="flex flex-col pl-2">
-                <span className="text-[10px] font-bold leading-tight">Protein</span>
-                <span className="text-[10px] font-bold leading-tight">Fest</span>
-              </div>
-              <div className="w-8 h-8 bg-gray-100 rounded-lg"></div>
-            </div>
           </div>
         </div>
       </header>
@@ -95,35 +78,35 @@ export default function Layout({ children, categories = [] }) {
             <span className="text-[10px] font-bold">Categories</span>
           </div>
         </Link>
-        <div className="flex flex-col items-center justify-center gap-0.5 text-gray-500 active:scale-95 transition-transform cursor-pointer">
-          <span className="material-symbols-outlined text-[24px]">receipt_long</span>
-          <span className="text-[10px] font-bold">Buy Again</span>
-        </div>
-        <div className="flex flex-col items-center justify-center gap-0.5 text-gray-500 active:scale-95 transition-transform cursor-pointer">
-          <span className="material-symbols-outlined text-[24px]">print</span>
-          <span className="text-[10px] font-bold">Print Store</span>
-        </div>
+        <Link href="/cart">
+          <div className={`flex flex-col items-center justify-center gap-0.5 ${router.pathname === '/cart' ? 'text-[#E91E63]' : 'text-gray-500'} active:scale-95 transition-transform cursor-pointer relative`}>
+            <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: router.pathname === '/cart' ? "'FILL' 1" : "" }}>shopping_basket</span>
+            <span className="text-[10px] font-bold">Cart</span>
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-[#E91E63] text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center border border-white">
+                {cartCount}
+              </span>
+            )}
+          </div>
+        </Link>
       </nav>
 
-      {/* Floating Cart Button */}
-      {cartCount > 0 && router.pathname !== '/cart' && (
-        <div className="fixed bottom-[80px] left-4 right-4 z-40 lg:hidden">
-          <Link href="/cart">
-            <div className="bg-[#E91E63] text-white px-4 py-3 rounded-2xl flex items-center justify-between shadow-xl shadow-[#E91E63]/30 animate-in fade-in slide-in-from-bottom-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white">shopping_bag</span>
-                </div>
-                <div className="flex flex-col leading-none">
-                  <span className="text-sm font-black">Cart</span>
-                  <span className="text-[11px] font-bold opacity-80">{cartCount} items</span>
-                </div>
-              </div>
-              <span className="material-symbols-outlined">chevron_right</span>
-            </div>
-          </Link>
-        </div>
-      )}
+      {/* Floating Cart Button (Desktop only, or optional) */}
+      <div className="fixed bottom-6 right-6 z-40 hidden md:block">
+        <Link href="/cart">
+           <button className="bg-white border border-gray-100 p-4 rounded-2xl shadow-2xl flex flex-col items-center gap-1 group active:scale-95 transition-all">
+             <div className="relative">
+                <span className="material-symbols-outlined text-black text-[32px]">shopping_cart</span>
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-[#E91E63] text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                    {cartCount}
+                  </span>
+                )}
+             </div>
+             <span className="text-xs font-bold text-gray-500">Cart</span>
+           </button>
+        </Link>
+      </div>
     </div>
   );
 }
