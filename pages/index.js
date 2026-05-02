@@ -1,24 +1,27 @@
 import { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
-import { getCategories, getAllProducts } from "@/lib/products";
+import { getCategories, getAllProducts, getSettings } from "@/lib/products";
 import Link from "next/link";
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [currentBanner, setCurrentBanner] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [cats, prods] = await Promise.all([
+        const [cats, prods, storeSettings] = await Promise.all([
           getCategories(),
-          getAllProducts()
+          getAllProducts(),
+          getSettings()
         ]);
         setCategories(cats);
-        // On homepage, we might want to group products by category or just show some featured ones
         setProducts(prods);
+        setSettings(storeSettings);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -27,6 +30,15 @@ export default function Home() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (settings?.banners?.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentBanner((prev) => (prev + 1) % settings.banners.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [settings?.banners]);
 
   if (loading) {
     return (
@@ -41,22 +53,57 @@ export default function Home() {
 
   return (
     <Layout categories={categories}>
-      {/* Category Hero / Billboard */}
-      <section className="mt-6 mb-4">
-        <div className="bg-gradient-to-r from-primary to-violet-400 rounded-2xl p-6 lg:p-8 flex items-center justify-between overflow-hidden relative">
-          <div className="relative z-10">
-            <div className="text-[48px] leading-none mb-3">🛒</div>
-            <h1 className="font-h1 text-white mb-1">Welcome to Alfajr Super Mart</h1>
-            <p className="text-white/80 font-body-md">Quality groceries delivered fast to your doorstep.</p>
+      {/* Hero Section / Banner Carousel */}
+      <section className="mt-4 mb-4">
+        {settings?.banners?.length > 0 ? (
+          <div className="relative overflow-hidden rounded-2xl aspect-[21/9] md:aspect-[25/9] bg-surface-container-low shadow-sm">
+            <div 
+              className="flex transition-transform duration-700 ease-in-out h-full"
+              style={{ transform: `translateX(-${currentBanner * 100}%)` }}
+            >
+              {settings.banners.map((banner, idx) => (
+                <div key={idx} className="min-w-full h-full">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src={banner} 
+                    alt={`Banner ${idx + 1}`} 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+            
+            {/* Carousel Indicators */}
+            {settings.banners.length > 1 && (
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                {settings.banners.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentBanner(idx)}
+                    className={`w-1.5 h-1.5 rounded-full transition-all ${
+                      currentBanner === idx ? "bg-white w-4" : "bg-white/40"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
-          <div className="absolute right-0 top-0 h-full opacity-20 flex items-center">
-            <span className="material-symbols-outlined text-[180px] -rotate-12 translate-x-12">shopping_bag</span>
+        ) : (
+          <div className="bg-gradient-to-r from-primary to-violet-400 rounded-2xl p-6 lg:p-8 flex items-center justify-between overflow-hidden relative shadow-md">
+            <div className="relative z-10">
+              <div className="text-[40px] md:text-[48px] leading-none mb-3">🛒</div>
+              <h1 className="font-h1 text-white mb-1 text-2xl md:text-3xl">{settings?.storeName || "Alfajr Super Mart"}</h1>
+              <p className="text-white/80 font-body-md text-sm md:text-base">Quality groceries delivered fast to your doorstep.</p>
+            </div>
+            <div className="absolute right-0 top-0 h-full opacity-20 flex items-center">
+              <span className="material-symbols-outlined text-[140px] md:text-[180px] -rotate-12 translate-x-12">shopping_bag</span>
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* Category Pills (Horizontal Scroll) */}
-      <nav className="sticky top-[60px] bg-surface-container-lowest z-40 py-4 flex items-center gap-2 overflow-x-auto scrollbar-hide">
+      <nav className="sticky top-[104px] md:top-[60px] bg-surface-container-lowest z-40 py-4 flex items-center gap-2 overflow-x-auto scrollbar-hide transition-all">
         <button className="whitespace-nowrap px-4 py-2 rounded-full border border-primary bg-primary-fixed text-on-primary-fixed-variant font-bold text-body-sm">
           All
         </button>

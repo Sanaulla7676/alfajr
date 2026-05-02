@@ -8,9 +8,11 @@ export default function AdminSettings() {
   const [formData, setFormData] = useState({
     storeName: "",
     whatsappNumber: "",
-    adminEmail: ""
+    adminEmail: "",
+    banners: []
   });
   const [loading, setLoading] = useState(false);
+  const [uploadingBanner, setUploadingBanner] = useState(false);
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
@@ -18,7 +20,10 @@ export default function AdminSettings() {
       try {
         const settings = await getSettings();
         if (settings) {
-          setFormData(settings);
+          setFormData({
+            ...settings,
+            banners: settings.banners || []
+          });
         }
       } catch (err) {
         console.error("Error fetching settings:", err);
@@ -32,6 +37,50 @@ export default function AdminSettings() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleBannerUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Check size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Image must be less than 5MB");
+      return;
+    }
+
+    setUploadingBanner(true);
+    try {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        const response = await fetch("/api/upload-image", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: reader.result }),
+        });
+
+        if (!response.ok) throw new Error("Upload failed");
+        
+        const data = await response.json();
+        setFormData(prev => ({
+          ...prev,
+          banners: [...(prev.banners || []), data.url]
+        }));
+      };
+    } catch (err) {
+      console.error("Error uploading banner:", err);
+      alert("Failed to upload banner: " + err.message);
+    } finally {
+      setUploadingBanner(false);
+    }
+  };
+
+  const removeBanner = (indexToRemove) => {
+    setFormData(prev => ({
+      ...prev,
+      banners: prev.banners.filter((_, index) => index !== indexToRemove)
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -94,6 +143,48 @@ export default function AdminSettings() {
                 onChange={handleInputChange}
                 className="w-full bg-surface-container-low border-none rounded-2xl px-5 py-3.5 text-body-md focus:ring-2 focus:ring-primary outline-none transition-all"
               />
+            </div>
+          </div>
+
+          <hr className="border-gray-100" />
+
+          <div className="space-y-4">
+            <h4 className="font-h4">Hero Section Banners</h4>
+            <p className="text-body-sm text-outline">Upload banners to display in the sliding carousel on the homepage.</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {formData.banners && formData.banners.map((url, idx) => (
+                <div key={idx} className="relative group rounded-xl overflow-hidden border border-gray-100 bg-surface-container-low aspect-[21/9]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={url} alt={`Banner ${idx + 1}`} className="w-full h-full object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => removeBanner(idx)}
+                    className="absolute top-2 right-2 bg-error text-white w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 shadow-lg"
+                  >
+                    <span className="material-symbols-outlined text-sm">delete</span>
+                  </button>
+                </div>
+              ))}
+              
+              <label className="border-2 border-dashed border-primary/30 rounded-xl flex flex-col items-center justify-center aspect-[21/9] cursor-pointer hover:bg-primary/5 transition-colors group">
+                <input 
+                  type="file" 
+                  accept="image/jpeg, image/png, image/webp" 
+                  onChange={handleBannerUpload}
+                  disabled={uploadingBanner}
+                  className="hidden" 
+                />
+                {uploadingBanner ? (
+                  <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <>
+                    <span className="material-symbols-outlined text-4xl text-primary/50 group-hover:text-primary transition-colors mb-2">add_photo_alternate</span>
+                    <span className="text-body-sm font-bold text-primary">Upload Banner</span>
+                    <span className="text-[10px] text-outline mt-1">Aspect ratio ~ 21:9 (e.g. 1200x500)</span>
+                  </>
+                )}
+              </label>
             </div>
           </div>
 

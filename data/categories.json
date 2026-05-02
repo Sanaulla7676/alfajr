@@ -108,14 +108,14 @@
     "itemCount": 64
   },
   {
-    "name": "Agarbathi, Puja & Home Essentials",
-    "slug": "agarbathi-puja-home-essentials",
+    "name": "Home Essentials",
+    "slug": "home-essentials",
     "emoji": "🪔",
     "itemCount": 20
   },
   {
-    "name": "Frozen Foods & Ice Cream",
-    "slug": "frozen-foods-ice-cream",
+    "name": "Frozen Foods",
+    "slug": "frozen-foods",
     "emoji": "🍦",
     "itemCount": 29
   }

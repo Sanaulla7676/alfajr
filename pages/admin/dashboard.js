@@ -88,6 +88,15 @@ export default function AdminDashboard() {
                   <span className="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">chevron_right</span>
                 </button>
               </Link>
+              <Link href="/admin/settings">
+                <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-surface-container-low hover:bg-surface-container transition-all group">
+                  <div className="flex items-center gap-3">
+                    <span className="material-symbols-outlined text-amber-500">gallery_thumbnail</span>
+                    <span className="font-bold text-on-surface">Manage Hero Banners</span>
+                  </div>
+                  <span className="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">chevron_right</span>
+                </button>
+              </Link>
             </div>
           </div>
 

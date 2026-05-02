@@ -18,51 +18,55 @@ export default function Layout({ children, categories = [] }) {
   return (
     <div className="min-h-screen bg-surface-container-lowest font-inter">
       {/* TopAppBar */}
-      <header className="sticky top-0 w-full flex items-center justify-between px-4 py-2 bg-white z-50 shadow-sm border-b border-gray-100">
-        <div className="flex items-center gap-6">
-          <Link href="/">
-            <span className="text-2xl font-black tracking-tighter text-violet-600 cursor-pointer">{settings?.storeName || "Alfajr Super Mart"}</span>
-          </Link>
-          <div className="hidden md:flex items-center gap-1 bg-surface-container-low px-3 py-1.5 rounded-lg cursor-default">
-            <span className="material-symbols-outlined text-primary text-[20px]" data-icon="location_on">location_on</span>
-            <div className="flex flex-col leading-none">
-              <span className="text-label-caps font-bold text-outline">Fast Delivery</span>
-              <span className="text-body-sm font-semibold truncate max-w-[150px]">HSR Layout, Sector 7, Bengaluru</span>
+      <header className="sticky top-0 w-full bg-white z-50 shadow-sm border-b border-gray-100">
+        <div className="max-w-[1400px] mx-auto px-4 py-2 flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
+          {/* Row 1: Logo & Actions (Actions move to end on MD) */}
+          <div className="flex items-center justify-between md:justify-start gap-6">
+            <Link href="/">
+              <span className="text-xl md:text-2xl font-black tracking-tighter text-violet-600 cursor-pointer">{settings?.storeName || "Alfajr Super Mart"}</span>
+            </Link>
+            <div className="hidden md:flex items-center gap-1 bg-surface-container-low px-3 py-1.5 rounded-lg cursor-default">
+              <span className="material-symbols-outlined text-primary text-[20px]" data-icon="location_on">location_on</span>
+              <div className="flex flex-col leading-none">
+                <span className="text-label-caps font-bold text-outline">Fast Delivery</span>
+                <span className="text-body-sm font-semibold truncate max-w-[150px]">HSR Layout, Sector 7, Bengaluru</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="flex-1 max-w-xl mx-4">
-          <form onSubmit={handleSearch} className="relative group">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline" data-icon="search">search</span>
-            <input 
-              className="w-full bg-surface-container px-10 py-2.5 rounded-xl border-none focus:ring-2 focus:ring-primary-container text-body-md transition-all" 
-              placeholder="Search for 'milk'" 
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </form>
-        </div>
+          {/* Row 2 on mobile, Middle on Desktop: Search Bar */}
+          <div className="w-full flex-1 order-3 md:order-2">
+            <form onSubmit={handleSearch} className="relative group">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline" data-icon="search">search</span>
+              <input 
+                className="w-full bg-surface-container-low border border-gray-100 px-10 py-2 md:py-2.5 rounded-xl focus:ring-2 focus:ring-primary-container text-sm md:text-body-md transition-all outline-none" 
+                placeholder="Search for 'milk'" 
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </form>
+          </div>
 
-        <div className="flex items-center gap-4">
-          <button className="flex items-center gap-2 p-2 hover:bg-gray-50 transition-colors rounded-full active:opacity-80">
-            <span className="material-symbols-outlined text-on-surface" data-icon="person">person</span>
+          {/* Desktop Actions / Mobile Actions (Right aligned) */}
+          <div className="flex items-center gap-2 md:gap-4 order-2 md:order-3 absolute md:relative right-4 top-2 md:top-auto">
             <Link href="/admin/login">
-              <span className="hidden lg:block font-bold text-body-md">Admin</span>
+              <button className="p-2 hover:bg-gray-50 transition-colors rounded-full active:opacity-80">
+                <span className="material-symbols-outlined text-on-surface" data-icon="person">person</span>
+              </button>
             </Link>
-          </button>
-          <Link href="/cart">
-            <button className="bg-primary px-4 py-2 rounded-lg flex items-center gap-2 text-white active:opacity-80 transition-opacity relative">
-              <span className="material-symbols-outlined" data-icon="shopping_cart" style={{ fontVariationSettings: "'FILL' 1" }}>shopping_cart</span>
-              <span className="font-bold text-body-md">My Cart</span>
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-          </Link>
+            <Link href="/cart">
+              <button className="bg-primary px-3 md:px-4 py-1.5 md:py-2 rounded-lg flex items-center gap-1.5 md:gap-2 text-white active:opacity-80 transition-opacity relative">
+                <span className="material-symbols-outlined text-[20px] md:text-[24px]" data-icon="shopping_cart" style={{ fontVariationSettings: "'FILL' 1" }}>shopping_cart</span>
+                <span className="hidden sm:block font-bold text-xs md:text-body-md whitespace-nowrap">My Cart</span>
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] md:text-[10px] w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+            </Link>
+          </div>
         </div>
       </header>
 
