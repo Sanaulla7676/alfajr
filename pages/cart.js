@@ -53,13 +53,15 @@ export default function CartPage() {
   if (isOrdered) {
     return (
       <Layout>
-        <div className="flex flex-col items-center justify-center py-20 gap-6 text-center">
-          <div className="text-8xl">🎉</div>
-          <h1 className="font-h1 text-on-surface">Order sent!</h1>
-          <p className="text-outline max-w-sm">We have received your order details via WhatsApp. We will contact you soon for confirmation and delivery.</p>
+        <div className="flex flex-col items-center justify-center py-24 gap-8 text-center bg-white rounded-[40px] border-2 border-dashed border-gray-100 shadow-sm mt-8">
+          <div className="text-8xl drop-shadow-lg">🎉</div>
+          <div className="space-y-3 px-6">
+            <h1 className="text-3xl font-serif font-black text-[#2D004C]">Order sent!</h1>
+            <p className="text-gray-400 font-bold text-sm max-w-sm">We have received your order details via WhatsApp. We will contact you soon for confirmation and delivery.</p>
+          </div>
           <button 
             onClick={() => router.push('/')}
-            className="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-md active:scale-95 transition-all"
+            className="bg-[#2D004C] text-[#E5B80B] px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest shadow-xl active:scale-95 transition-all"
           >
             Continue Shopping
           </button>
@@ -71,13 +73,15 @@ export default function CartPage() {
   if (cart.length === 0) {
     return (
       <Layout>
-        <div className="flex flex-col items-center justify-center py-20 gap-6 text-center">
-          <div className="text-8xl">🛒</div>
-          <h1 className="font-h1 text-on-surface">Your cart is empty</h1>
-          <p className="text-outline">Add some items from our fresh collection to get started!</p>
+        <div className="flex flex-col items-center justify-center py-24 gap-8 text-center bg-white rounded-[40px] border-2 border-dashed border-gray-100 shadow-sm mt-8">
+          <div className="text-8xl drop-shadow-lg">🛒</div>
+          <div className="space-y-3 px-6">
+            <h1 className="text-3xl font-serif font-black text-[#2D004C]">Your cart is empty</h1>
+            <p className="text-gray-400 font-bold text-sm">Add some items from our fresh collection to get started!</p>
+          </div>
           <button 
             onClick={() => router.push('/')}
-            className="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-md active:scale-95 transition-all"
+            className="bg-[#2D004C] text-[#E5B80B] px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest shadow-xl active:scale-95 transition-all"
           >
             Go Shopping
           </button>
@@ -88,39 +92,42 @@ export default function CartPage() {
 
   return (
     <Layout>
-      <div className="mt-8 mb-4">
-        <h1 className="font-h1 text-on-surface">My Cart</h1>
-        <p className="text-outline font-body-md">{cart.length} unique items in your cart</p>
+      <div className="mt-10 mb-6 px-2">
+        <h1 className="text-4xl font-serif font-black text-[#2D004C] mb-2">My Cart</h1>
+        <div className="flex items-center gap-2">
+           <span className="w-2 h-2 rounded-full bg-[#E5B80B]"></span>
+           <p className="text-gray-400 font-black text-xs uppercase tracking-widest">{cart.length} unique items</p>
+        </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8 pb-20">
+      <div className="flex flex-col lg:flex-row gap-10 pb-24">
         {/* Cart Items List */}
-        <div className="flex-1 space-y-4">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="flex-1 space-y-6">
+          <div className="bg-white rounded-[32px] shadow-sm border border-gray-50 overflow-hidden">
             {cart.map((item, index) => (
-              <div key={item.id} className={`p-4 flex items-center gap-4 ${index !== cart.length - 1 ? 'border-b border-gray-50' : ''}`}>
-                <div className="w-16 h-16 bg-surface-container-low rounded-lg overflow-hidden flex-shrink-0">
+              <div key={item.id} className={`p-6 flex items-center gap-5 ${index !== cart.length - 1 ? 'border-b border-gray-50' : ''}`}>
+                <div className="w-20 h-20 bg-gray-50 rounded-[20px] overflow-hidden flex-shrink-0 border border-gray-100 shadow-inner">
                   {item.imageUrl ? (
                     <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
                   ) : (
-                    <div className="w-full h-full bg-[#e5e7eb] flex items-center justify-center">
-                      <span className="text-[#6b7280] font-bold">{item.name.charAt(0)}</span>
+                    <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                      <span className="text-gray-300 font-serif text-2xl">{item.name.charAt(0)}</span>
                     </div>
                   )}
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-h3 text-on-surface leading-tight mb-0.5">{item.name}</h4>
-                  <p className="text-body-sm text-outline">{item.unit || "1 unit"}</p>
+                  <h4 className="text-lg font-bold text-[#2D004C] leading-tight mb-1">{item.name}</h4>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{item.unit || "1 unit"}</p>
                 </div>
-                <div className="flex flex-col items-end gap-2">
-                  <span className="font-price-lg">₹{item.price * item.quantity}</span>
-                  <div className="h-8 flex items-center bg-[#2ED573] rounded-lg text-white px-1 shadow-sm shrink-0">
-                    <button onClick={() => removeFromCart(item.id)} className="p-1 hover:bg-white/10 rounded">
-                      <span className="material-symbols-outlined text-[16px]">remove</span>
+                <div className="flex flex-col items-end gap-3">
+                  <span className="text-lg font-black text-[#2D004C]">₹{item.price * item.quantity}</span>
+                  <div className="h-10 flex items-center bg-[#2D004C] rounded-xl text-white px-1 shadow-md shrink-0">
+                    <button onClick={() => removeFromCart(item.id)} className="w-8 h-8 flex items-center justify-center hover:bg-white/10 rounded-lg">
+                      <span className="material-symbols-outlined text-[18px]">remove</span>
                     </button>
-                    <span className="px-2 font-bold text-body-sm min-w-[16px] text-center">{item.quantity}</span>
-                    <button onClick={() => addToCart(item)} className="p-1 hover:bg-white/10 rounded">
-                      <span className="material-symbols-outlined text-[16px]">add</span>
+                    <span className="px-3 font-black text-sm min-w-[20px] text-center">{item.quantity}</span>
+                    <button onClick={() => addToCart(item)} className="w-8 h-8 flex items-center justify-center hover:bg-white/10 rounded-lg">
+                      <span className="material-symbols-outlined text-[18px]">add</span>
                     </button>
                   </div>
                 </div>
@@ -130,13 +137,13 @@ export default function CartPage() {
         </div>
 
         {/* Checkout Form */}
-        <div className="lg:w-[400px]">
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 sticky top-[100px]">
-            <h3 className="font-h3 text-on-surface mb-6">Delivery Details</h3>
+        <div className="lg:w-[420px]">
+          <div className="bg-white rounded-[32px] shadow-2xl border border-gray-50 p-8 sticky top-[100px]">
+            <h3 className="text-2xl font-serif font-black text-[#2D004C] mb-8">Delivery Details</h3>
             
-            <form onSubmit={handlePlaceOrder} className="space-y-4">
-              <div>
-                <label className="block text-body-sm font-bold text-outline uppercase mb-1">Full Name</label>
+            <form onSubmit={handlePlaceOrder} className="space-y-6">
+              <div className="space-y-1">
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] ml-2">Full Name</label>
                 <input 
                   type="text" 
                   name="name"
@@ -144,11 +151,11 @@ export default function CartPage() {
                   onChange={handleInputChange}
                   required
                   placeholder="Enter your name"
-                  className="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-body-md focus:ring-2 focus:ring-primary-container outline-none"
+                  className="w-full bg-gray-50 border-2 border-transparent focus:border-[#E5B80B] rounded-2xl px-5 py-3.5 text-sm font-bold text-[#2D004C] outline-none transition-all"
                 />
               </div>
-              <div>
-                <label className="block text-body-sm font-bold text-outline uppercase mb-1">Phone Number</label>
+              <div className="space-y-1">
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] ml-2">Phone Number</label>
                 <input 
                   type="tel" 
                   name="phone"
@@ -156,11 +163,11 @@ export default function CartPage() {
                   onChange={handleInputChange}
                   required
                   placeholder="e.g. +91 9876543210"
-                  className="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-body-md focus:ring-2 focus:ring-primary-container outline-none"
+                  className="w-full bg-gray-50 border-2 border-transparent focus:border-[#E5B80B] rounded-2xl px-5 py-3.5 text-sm font-bold text-[#2D004C] outline-none transition-all"
                 />
               </div>
-              <div>
-                <label className="block text-body-sm font-bold text-outline uppercase mb-1">Full Address</label>
+              <div className="space-y-1">
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] ml-2">Full Address</label>
                 <textarea 
                   name="address"
                   value={formData.address}
@@ -168,31 +175,32 @@ export default function CartPage() {
                   required
                   rows="3"
                   placeholder="Enter your complete address"
-                  className="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-body-md focus:ring-2 focus:ring-primary-container outline-none resize-none"
+                  className="w-full bg-gray-50 border-2 border-transparent focus:border-[#E5B80B] rounded-2xl px-5 py-3.5 text-sm font-bold text-[#2D004C] outline-none resize-none transition-all"
                 ></textarea>
               </div>
 
-              <div className="border-t border-gray-100 pt-4 mt-6 space-y-2">
-                <div className="flex justify-between text-body-md">
-                  <span className="text-outline">Subtotal</span>
-                  <span className="font-bold">₹{cartTotal}</span>
+              <div className="bg-[#2D004C]/5 rounded-[24px] p-6 space-y-4">
+                <div className="flex justify-between text-sm">
+                  <span className="font-bold text-gray-500 uppercase tracking-widest text-[10px]">Subtotal</span>
+                  <span className="font-black text-[#2D004C]">₹{cartTotal}</span>
                 </div>
-                <div className="flex justify-between text-body-md">
-                  <span className="text-outline">Delivery</span>
-                  <span className="text-[#2ED573] font-bold">FREE</span>
+                <div className="flex justify-between text-sm">
+                  <span className="font-bold text-gray-500 uppercase tracking-widest text-[10px]">Delivery</span>
+                  <span className="text-[#E5B80B] font-black uppercase tracking-widest text-[10px]">FREE</span>
                 </div>
-                <div className="flex justify-between items-center pt-2">
-                  <span className="font-h2 text-on-surface">Total</span>
-                  <span className="font-h1 text-primary">₹{cartTotal}</span>
+                <div className="h-px bg-[#2D004C]/10"></div>
+                <div className="flex justify-between items-center">
+                  <span className="font-serif font-black text-xl text-[#2D004C]">Total</span>
+                  <span className="text-3xl font-black text-[#2D004C] tracking-tight">₹{cartTotal}</span>
                 </div>
               </div>
 
               <button 
                 type="submit"
-                className="w-full bg-[#25D366] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 mt-6 active:scale-95 transition-all shadow-md"
+                className="w-full bg-[#25D366] text-white py-4.5 rounded-2xl font-black text-xs uppercase tracking-[0.15em] flex items-center justify-center gap-3 shadow-xl shadow-[#25D366]/20 active:scale-95 transition-all"
               >
-                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
-                PLACE ORDER ON WHATSAPP
+                <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
+                Order on WhatsApp
               </button>
             </form>
           </div>
