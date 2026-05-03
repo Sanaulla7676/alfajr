@@ -57,7 +57,7 @@ export default function CartPage() {
           <div className="text-8xl drop-shadow-lg">🎉</div>
           <div className="space-y-3 px-6">
             <h1 className="text-3xl font-serif font-black text-[#2D004C]">Order sent!</h1>
-            <p className="text-gray-400 font-bold text-sm max-w-sm">We have received your order details via WhatsApp. We will contact you soon for confirmation and delivery.</p>
+            <p className="text-gray-400 font-bold text-sm max-w-sm">We have received your order details via WhatsApp. Please visit our store for pickup at your convenience.</p>
           </div>
           <button 
             onClick={() => router.push('/')}
@@ -188,8 +188,8 @@ export default function CartPage() {
                   <span className="font-black text-[#2D004C]">₹{cartTotal}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="font-bold text-gray-500 uppercase tracking-widest text-[10px]">Method</span>
-                  <span className="text-[#E5B80B] font-black uppercase tracking-widest text-[10px]">STORE PICKUP</span>
+                  <span className="font-bold text-gray-500 uppercase tracking-widest text-[10px]">Pickup</span>
+                  <span className="text-[#E5B80B] font-black uppercase tracking-widest text-[10px]">Store Pickup</span>
                 </div>
                 <div className="h-px bg-[#2D004C]/10"></div>
                 <div className="flex justify-between items-center">
