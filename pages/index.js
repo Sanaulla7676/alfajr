@@ -171,13 +171,15 @@ export default function Home() {
                 </Link>
               </div>
               
-              <div className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-2 px-4 pb-4">
+              <div className="flex items-stretch gap-2 overflow-x-auto scrollbar-hide px-4 pb-4">
                 {catProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                  <div key={product.id} className="min-w-[130px] max-w-[130px]">
+                    <ProductCard product={product} />
+                  </div>
                 ))}
                 {/* View More Card */}
                 <Link href={`/category/${cat.slug}`}>
-                   <div className="flex flex-col items-center justify-center bg-white rounded-2xl border-2 border-dashed border-[#E5B80B]/40 cursor-pointer hover:bg-[#E5B80B]/5 transition-colors aspect-square">
+                   <div className="min-w-[110px] flex flex-col items-center justify-center bg-white rounded-2xl border-2 border-dashed border-[#E5B80B]/40 cursor-pointer hover:bg-[#E5B80B]/5 transition-colors aspect-square">
                       <div className="w-8 h-8 rounded-full bg-[#2D004C] flex items-center justify-center shadow-md mb-1">
                          <span className="material-symbols-outlined text-[#E5B80B] text-sm">arrow_forward</span>
                       </div>
