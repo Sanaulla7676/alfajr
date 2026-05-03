@@ -18,50 +18,49 @@ export default function ProductCard({ product }) {
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
 
   return (
-    <div className={`bg-white rounded-[24px] p-4 shadow-[0px_4px_12px_rgba(0,0,0,0.03)] border-2 transition-all flex flex-col group ${quantity > 0 ? 'border-[#E5B80B]' : 'border-gray-50 hover:border-[#E5B80B]/30'}`}>
-      <div className="relative mb-4 aspect-square rounded-[20px] overflow-hidden bg-gray-50 flex items-center justify-center">
+    <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 transition-all flex flex-col group h-full overflow-hidden ${quantity > 0 ? 'border-[#E5B80B]' : 'hover:border-[#E5B80B]/30'}`}>
+      {/* Product Image */}
+      <div className="relative aspect-square bg-[#F8F8F8] overflow-hidden group">
         {discount > 0 && (
-          <span className="absolute top-3 left-3 bg-[#2D004C] text-[#E5B80B] text-[10px] font-black px-2 py-1 rounded-lg uppercase z-10 shadow-sm">
+          <span className="absolute top-2 left-2 bg-[#2D004C] text-[#E5B80B] text-[8px] font-black px-1.5 py-0.5 rounded uppercase z-10">
             {discount}% OFF
           </span>
         )}
-        
         {product.imageUrl ? (
           <img 
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
             src={product.imageUrl} 
-            alt={product.name} 
+            alt={product.name}
+            className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-500"
           />
         ) : (
-          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-            <span className="text-gray-300 text-4xl font-serif">
-              {product.name ? product.name.charAt(0) : '?'}
-            </span>
+          <div className="w-full h-full flex items-center justify-center text-gray-300 font-serif text-3xl">
+            {product.name ? product.name.charAt(0) : '?'}
           </div>
         )}
       </div>
 
-      <div className="flex flex-col flex-1">
-        <div className="mb-3">
-           <div className="flex items-baseline gap-1 mb-1">
-              {product.price > 0 ? (
-                <>
-                  <span className="text-lg font-black text-[#2D004C]">₹{product.price}</span>
-                  {product.originalPrice && product.originalPrice > product.price && (
-                    <span className="text-xs text-gray-400 line-through">₹{product.originalPrice}</span>
-                  )}
-                </>
-              ) : (
-                <span className="text-xs font-bold text-[#2D004C] italic">Price on Request</span>
-              )}
-           </div>
-           <h4 className="font-bold text-[#2D004C] text-[13px] line-clamp-2 leading-tight min-h-[32px]">{product.name}</h4>
-           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-1">{product.unit || "1 unit"}</p>
-        </div>
+      {/* Content */}
+      <div className="p-2 lg:p-3 flex flex-col flex-1 gap-1">
+        <h3 className="text-[10px] lg:text-xs font-bold text-[#2D004C] line-clamp-2 leading-tight min-h-[2.5em]">
+          {product.name}
+        </h3>
+        <p className="text-[9px] text-gray-400 uppercase tracking-wider">{product.unit || "1 unit"}</p>
         
-        <div className="mt-auto">
+        <div className="mt-auto pt-2">
+          <div className="flex items-center gap-1 mb-2">
+            {product.price > 0 ? (
+              <>
+                <span className="text-xs lg:text-sm font-black text-[#2D004C]">₹{product.price}</span>
+                {product.originalPrice && product.originalPrice > product.price && (
+                  <span className="text-[8px] lg:text-[10px] text-gray-400 line-through">₹{product.originalPrice}</span>
+                )}
+              </>
+            ) : (
+              <span className="text-[9px] font-bold text-[#2D004C] italic">Price on Request</span>
+            )}
+          </div>
+          
           {quantity > 0 ? (
-            <div className="h-10 flex items-center justify-between bg-[#2D004C] rounded-xl text-white px-1 shadow-md">
               <button onClick={handleRemove} className="w-8 h-8 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors">
                 <span className="material-symbols-outlined text-[20px]">remove</span>
               </button>

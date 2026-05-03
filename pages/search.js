@@ -74,7 +74,7 @@ export default function SearchPage() {
       ) : (
         <div className="pb-20">
           {searchResults.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+            <div className="grid grid-cols-4 md:grid-cols-5 xl:grid-cols-6 gap-2 lg:gap-6">
               {searchResults.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
