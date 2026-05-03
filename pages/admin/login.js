@@ -103,9 +103,12 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 space-y-4">
+          <Link href="/admin/app">
+            <span className="text-primary hover:underline font-bold text-body-sm cursor-pointer block">📱 Install Admin App on your Phone</span>
+          </Link>
           <Link href="/">
-            <span className="text-outline hover:text-primary font-bold text-body-sm cursor-pointer transition-colors">← Back to Store</span>
+            <span className="text-on-surface-variant/60 hover:text-primary font-bold text-body-sm cursor-pointer transition-colors block">← Back to Store</span>
           </Link>
         </div>
       </div>
