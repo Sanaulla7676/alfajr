@@ -149,6 +149,38 @@ export default function AdminSettings() {
           <hr className="border-gray-100" />
 
           <div className="space-y-4">
+            <h4 className="font-h2">Hero Banner Package</h4>
+            <p className="text-body-sm text-outline">Configure the product package that is added to the cart when a user clicks "Buy Now" on the main banner.</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-body-sm font-bold text-outline uppercase mb-1.5 ml-1">Hero Package Name</label>
+                <input 
+                  type="text" 
+                  name="heroPackageName"
+                  value={formData.heroPackageName || ""}
+                  onChange={handleInputChange}
+                  placeholder="e.g. Monthly Grocery Box"
+                  className="w-full bg-surface-container-low border-none rounded-2xl px-5 py-3.5 text-body-md focus:ring-2 focus:ring-primary outline-none transition-all"
+                />
+              </div>
+              <div>
+                <label className="block text-body-sm font-bold text-outline uppercase mb-1.5 ml-1">Hero Package Price (₹)</label>
+                <input 
+                  type="number" 
+                  name="heroPackagePrice"
+                  value={formData.heroPackagePrice || ""}
+                  onChange={handleInputChange}
+                  placeholder="e.g. 1999"
+                  className="w-full bg-surface-container-low border-none rounded-2xl px-5 py-3.5 text-body-md focus:ring-2 focus:ring-primary outline-none transition-all"
+                />
+              </div>
+            </div>
+          </div>
+
+          <hr className="border-gray-100" />
+
+          <div className="space-y-4">
             <h4 className="font-h4">Hero Section Banners</h4>
             <p className="text-body-sm text-outline">Upload banners to display in the sliding carousel on the homepage.</p>
             

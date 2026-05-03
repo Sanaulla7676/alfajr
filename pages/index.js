@@ -15,7 +15,23 @@ export default function Home() {
   const [showNotification, setShowNotification] = useState(false);
 
   const handleBuyNow = () => {
-    // Add first 3 products of the first category to cart as a "bundle"
+    if (settings?.heroPackageName && settings?.heroPackagePrice) {
+      // Add the custom Hero Package to cart as requested
+      const heroPackage = {
+        id: 'hero-package-item', // Static ID so it replaces itself if added again
+        name: settings.heroPackageName,
+        price: parseFloat(settings.heroPackagePrice),
+        imageUrl: settings.banners?.[0] || "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=600&q=80",
+        unit: "PACKAGE",
+        quantity: 1
+      };
+      addToCart(heroPackage);
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 3000);
+      return;
+    }
+
+    // Fallback: Add first 3 products of the first category to cart as a "bundle"
     if (categories.length > 0) {
       const firstCat = categories[0];
       const bundleProducts = products.filter(p => p.categorySlug === firstCat.slug).slice(0, 3);
@@ -23,7 +39,6 @@ export default function Home() {
       setShowNotification(true);
       setTimeout(() => setShowNotification(false), 3000);
       
-      // Scroll to categories or just show notification
       const firstSection = document.getElementById(firstCat.slug);
       if (firstSection) {
         firstSection.scrollIntoView({ behavior: 'smooth' });
@@ -98,8 +113,18 @@ export default function Home() {
                       alt={`Banner ${idx + 1}`} 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                    <div className="absolute bottom-6 left-8 z-10">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div className="absolute bottom-6 left-6 z-10 space-y-1">
+                      {settings.heroPackageName && (
+                        <div className="space-y-0.5">
+                          <span className="text-[#E5B80B] font-black text-[10px] uppercase tracking-[0.2em] block">SPECIAL OFFER</span>
+                          <h2 className="text-xl font-serif font-black text-white leading-tight">{settings.heroPackageName}</h2>
+                          <div className="flex items-center gap-2">
+                             <span className="text-[#E5B80B] font-black text-lg">₹{settings.heroPackagePrice}</span>
+                             <span className="text-white/40 text-[8px] uppercase font-bold tracking-widest bg-white/10 px-2 py-0.5 rounded-full">One Box</span>
+                          </div>
+                        </div>
+                      )}
                       <button 
                         onClick={handleBuyNow}
                         className="bg-[#E5B80B] text-[#2D004C] px-8 py-3 rounded-full font-black text-sm uppercase shadow-2xl active:scale-95 transition-all"
@@ -117,8 +142,10 @@ export default function Home() {
             <div className="bg-[#2D004C] rounded-[28px] p-8 flex flex-col md:flex-row items-center justify-between overflow-hidden relative border-2 border-[#E5B80B] aspect-[21/11] text-white">
               <div className="relative z-10 w-full md:w-3/5">
                 <span className="text-[#E5B80B] font-black text-xs uppercase tracking-[0.2em] mb-3 block">ALFAJR PREMIUM</span>
-                <h2 className="text-2xl md:text-4xl font-serif font-black mb-3 leading-tight text-white">Grocery Plan - <span className="text-[#E5B80B]">₹2250</span></h2>
-                <p className="text-white/60 text-[11px] mb-6 font-medium italic">"ALL 22 ESSENTIAL ITEMS IN ONE BOX"</p>
+                <h2 className="text-2xl md:text-4xl font-serif font-black mb-3 leading-tight text-white">
+                  {settings?.heroPackageName || "Grocery Plan"} - <span className="text-[#E5B80B]">₹{settings?.heroPackagePrice || "2250"}</span>
+                </h2>
+                <p className="text-white/60 text-[11px] mb-6 font-medium italic">"ALL ESSENTIAL ITEMS IN ONE BOX"</p>
                 <button 
                   onClick={handleBuyNow}
                   className="bg-[#E5B80B] text-[#2D004C] px-10 py-3.5 rounded-full font-black text-sm uppercase shadow-xl active:scale-95 transition-all"
