@@ -66,6 +66,12 @@ export default function Layout({ children, categories = [] }) {
             <span className="text-[10px] font-bold">Categories</span>
           </div>
         </Link>
+        <Link href="/download-app">
+          <div className={`flex flex-col items-center justify-center gap-0.5 ${router.pathname === '/download-app' ? 'text-[#E5B80B]' : 'text-white/60'} active:scale-95 transition-transform cursor-pointer`}>
+            <span className="material-symbols-outlined text-[26px]">install_mobile</span>
+            <span className="text-[10px] font-bold">App</span>
+          </div>
+        </Link>
         <Link href="/cart">
           <div className={`flex flex-col items-center justify-center gap-0.5 ${router.pathname === '/cart' ? 'text-[#E5B80B]' : 'text-white/60'} active:scale-95 transition-transform cursor-pointer relative`}>
             <span className="material-symbols-outlined text-[26px]" style={{ fontVariationSettings: router.pathname === '/cart' ? "'FILL' 1" : "" }}>shopping_cart</span>
