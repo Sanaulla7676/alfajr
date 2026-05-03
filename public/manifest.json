@@ -1,0 +1,21 @@
+{
+  "name": "Alfajr Supermart",
+  "short_name": "Alfajr",
+  "description": "Premium Grocery Store in your pocket",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2D004C",
+  "theme_color": "#2D004C",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
