@@ -1,0 +1,23 @@
+name: Build Store APK
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build APK from Store PWA
+        uses: vancat/pwa-to-apk-action@v1
+        with:
+          url: https://alfajr-yr3u.vercel.app
+          name: Alfajr Store
+          package_id: com.alfajr.store
+          icon_url: https://alfajr-yr3u.vercel.app/icons/icon-512x512.png
+      
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Alfajr-Store-APK
+          path: ./*.apk
