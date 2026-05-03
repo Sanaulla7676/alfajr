@@ -11,15 +11,22 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Build APK with Microsoft PWABuilder
-        uses: pwa-builder/pwa-builder-action@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          url: https://alfajr-yr3u.vercel.app
-          name: Alfajr Store
-          packageId: com.alfajr.store
+          node-version: 20
+
+      - name: Install Bubblewrap
+        run: npm install -g @bubblewrap/cli
+
+      - name: Build APK
+        run: |
+          bubblewrap init --manifest=https://alfajr-yr3u.vercel.app/manifest.json --directory=./store-apk --confirmResign=true
+          cd store-apk
+          bubblewrap build --skip-signing
           
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Alfajr-Store-APK
-          path: ./artifacts/*.apk
+          path: ./store-apk/*.apk
