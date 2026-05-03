@@ -99,7 +99,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* Hero Section / Banner Carousel - 21:9 Aspect Ratio */}
+      {/* Hero Section / Banner Carousel - Clean Image Only */}
       <section className="bg-white py-4">
         {settings?.banners?.length > 0 ? (
           <div className="relative overflow-hidden aspect-[21/10] md:aspect-[25/9] px-4">
@@ -117,16 +117,13 @@ export default function Home() {
                         alt={bannerObj.name || "Banner"} 
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/40 to-transparent"></div>
-                      <div className="absolute top-0 left-0 h-full flex flex-col justify-center p-8 w-1/2">
-                        <span className="font-label-caps text-on-surface-variant mb-1">Vegetable Offers</span>
-                        <h2 className="text-2xl font-h1 text-on-surface mb-2">{bannerObj.name || "20% OFF"}</h2>
-                        <p className="text-[10px] text-on-surface-variant font-bold mb-4">10 October, 2025</p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                      <div className="absolute bottom-6 left-6 z-10">
                         <button 
                           onClick={handleBuyNow}
-                          className="bg-primary text-white px-6 py-2.5 rounded-full font-black text-xs uppercase shadow-lg shadow-primary/20 active:scale-95 transition-all w-fit"
+                          className="bg-primary text-white px-8 py-3 rounded-full font-black text-sm uppercase shadow-lg shadow-primary/30 active:scale-95 transition-all"
                         >
-                          Get Now
+                          Buy Now
                         </button>
                       </div>
                     </div>
@@ -137,18 +134,18 @@ export default function Home() {
             {/* Carousel Indicators */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
               {settings.banners.map((_, idx) => (
-                <div key={idx} className={`w-1.5 h-1.5 rounded-full transition-all ${currentBanner === idx ? 'bg-primary w-4' : 'bg-on-surface-variant/20'}`}></div>
+                <div key={idx} className={`w-1.5 h-1.5 rounded-full transition-all ${currentBanner === idx ? 'bg-primary w-4' : 'bg-white/40'}`}></div>
               ))}
             </div>
           </div>
         ) : null}
       </section>
 
-      {/* Category Icons - Horizontal Scroll */}
+      {/* Category Navigation Icons */}
       <section className="bg-white py-4 px-4">
         <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
           {categories.map((cat) => (
-            <Link key={cat.slug} href={`/category/${cat.slug}`}>
+            <Link key={cat.slug} href={`#${cat.slug}`}>
               <div className="flex flex-col items-center gap-2 min-w-[70px]">
                 <div className="w-14 h-14 rounded-2xl bg-surface-variant/30 flex items-center justify-center border border-outline-variant transition-all hover:border-primary/30 active:scale-90">
                   {cat.image ? (
@@ -162,49 +159,43 @@ export default function Home() {
             </Link>
           ))}
         </div>
-        <button className="w-full mt-4 flex items-center justify-center gap-2 py-3 rounded-2xl bg-primary/5 text-primary font-bold text-[11px] active:scale-95 transition-all">
-          <span className="material-symbols-outlined text-[18px]">grid_view</span>
-          View More Categories
-        </button>
       </section>
 
-      {/* Top Grocery Stores */}
-      <section className="bg-white py-6">
-        <div className="flex items-center justify-between px-4 mb-4">
-          <h2 className="font-h2 text-on-surface">Top Grocery Stores</h2>
-          <span className="text-on-surface-variant/60 font-bold text-xs">View all</span>
-        </div>
-        <div className="flex gap-4 overflow-x-auto scrollbar-hide px-4">
-          {["Walmart", "Carrefour", "Lulu", "Nesto", "VIVA", "Al Maya"].map((store) => (
-            <div key={store} className="flex flex-col items-center gap-2">
-              <div className="w-14 h-14 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center p-3">
-                 <img src={`https://www.google.com/s2/favicons?sz=64&domain=${store.toLowerCase()}.com`} alt={store} className="w-full h-full object-contain opacity-70" />
-              </div>
-              <span className="text-[10px] font-bold text-on-surface-variant">{store}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Categorized Product Sections - 2 Column Grid */}
-      <div className="space-y-10 pb-20">
-        {categories.slice(0, 5).map((cat) => {
-          const catProducts = products.filter(p => p.categorySlug === cat.slug).slice(0, 4);
+      {/* Product Rows - Restore Horizontal Scrolling Categorized Lists */}
+      <div className="space-y-12 pb-24">
+        {categories.map((cat) => {
+          const catProducts = products.filter(p => p.categorySlug === cat.slug);
           if (catProducts.length === 0) return null;
           
           return (
-            <section key={cat.slug}>
+            <section key={cat.slug} id={cat.slug} className="scroll-mt-24">
               <div className="flex items-center justify-between px-4 mb-4">
-                <h2 className="font-h2 text-on-surface">Top {cat.name} 2025</h2>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-xl">
+                    {cat.emoji}
+                  </div>
+                  <h2 className="font-h2 text-on-surface">{cat.name}</h2>
+                </div>
                 <Link href={`/category/${cat.slug}`}>
-                  <span className="text-on-surface-variant/60 font-bold text-xs">View all</span>
+                  <span className="text-primary font-bold text-xs bg-primary/5 px-4 py-1.5 rounded-full">View all</span>
                 </Link>
               </div>
               
-              <div className="grid grid-cols-2 gap-3 px-4">
+              <div className="flex gap-3 overflow-x-auto scrollbar-hide px-4">
                 {catProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                  <div key={product.id} className="min-w-[140px] max-w-[140px]">
+                    <ProductCard product={product} />
+                  </div>
                 ))}
+                {/* View More at end of row */}
+                <Link href={`/category/${cat.slug}`}>
+                   <div className="min-w-[120px] flex flex-col items-center justify-center bg-surface-variant/30 rounded-[24px] border border-dashed border-primary/20 aspect-square group active:scale-95 transition-all">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                         <span className="material-symbols-outlined">arrow_forward</span>
+                      </div>
+                      <span className="text-[10px] font-bold text-primary mt-2">More</span>
+                   </div>
+                </Link>
               </div>
             </section>
           );
