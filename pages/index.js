@@ -171,19 +171,17 @@ export default function Home() {
                 </Link>
               </div>
               
-              <div className="flex items-stretch gap-3 overflow-x-auto scrollbar-hide px-4 pb-4">
+              <div className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-2 px-4 pb-4">
                 {catProducts.map((product) => (
-                  <div key={product.id} className="min-w-[160px] max-w-[160px]">
-                    <ProductCard product={product} />
-                  </div>
+                  <ProductCard key={product.id} product={product} />
                 ))}
                 {/* View More Card */}
                 <Link href={`/category/${cat.slug}`}>
-                   <div className="min-w-[150px] flex flex-col items-center justify-center bg-white rounded-[24px] border-2 border-dashed border-[#E5B80B]/40 cursor-pointer hover:bg-[#E5B80B]/5 transition-colors">
-                      <div className="w-12 h-12 rounded-full bg-[#2D004C] flex items-center justify-center shadow-lg mb-3">
-                         <span className="material-symbols-outlined text-[#E5B80B]">arrow_forward</span>
+                   <div className="flex flex-col items-center justify-center bg-white rounded-2xl border-2 border-dashed border-[#E5B80B]/40 cursor-pointer hover:bg-[#E5B80B]/5 transition-colors aspect-square">
+                      <div className="w-8 h-8 rounded-full bg-[#2D004C] flex items-center justify-center shadow-md mb-1">
+                         <span className="material-symbols-outlined text-[#E5B80B] text-sm">arrow_forward</span>
                       </div>
-                      <span className="text-[11px] font-black text-[#2D004C] uppercase tracking-wider">View More</span>
+                      <span className="text-[8px] font-black text-[#2D004C] uppercase tracking-wider">More</span>
                    </div>
                 </Link>
               </div>

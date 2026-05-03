@@ -40,47 +40,47 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* Content */}
-      <div className="p-2 lg:p-3 flex flex-col flex-1 gap-1">
-        <h3 className="text-[10px] lg:text-xs font-bold text-[#2D004C] line-clamp-2 leading-tight min-h-[2.5em]">
+      <div className="p-1.5 lg:p-3 flex flex-col flex-1 gap-0.5">
+        <h3 className="text-[9px] lg:text-xs font-bold text-[#2D004C] line-clamp-2 leading-tight min-h-[2.4em]">
           {product.name}
         </h3>
-        <p className="text-[9px] text-gray-400 uppercase tracking-wider">{product.unit || "1 unit"}</p>
+        <p className="text-[7px] text-gray-400 uppercase font-black tracking-tighter">{product.unit || "1 unit"}</p>
         
-        <div className="mt-auto pt-2">
-          <div className="flex items-center gap-1 mb-2">
+        <div className="mt-auto pt-1">
+          <div className="flex items-center gap-1 mb-1.5">
             {product.price > 0 ? (
               <>
-                <span className="text-xs lg:text-sm font-black text-[#2D004C]">₹{product.price}</span>
+                <span className="text-[10px] lg:text-sm font-black text-[#2D004C]">₹{product.price}</span>
                 {product.originalPrice && product.originalPrice > product.price && (
-                  <span className="text-[8px] lg:text-[10px] text-gray-400 line-through">₹{product.originalPrice}</span>
+                  <span className="text-[7px] lg:text-[10px] text-gray-400 line-through">₹{product.originalPrice}</span>
                 )}
               </>
             ) : (
-              <span className="text-[9px] font-bold text-[#2D004C] italic">Price on Request</span>
+              <span className="text-[8px] font-black text-[#2D004C] italic">Enquire</span>
             )}
           </div>
           
           {quantity > 0 ? (
-            <div className="h-10 flex items-center justify-between bg-[#2D004C] rounded-xl text-white px-1 shadow-md">
-              <button onClick={handleRemove} className="w-8 h-8 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors">
-                <span className="material-symbols-outlined text-[20px]">remove</span>
+            <div className="h-8 flex items-center justify-between bg-[#2D004C] rounded-lg text-white px-1 shadow-md">
+              <button onClick={handleRemove} className="w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded-md transition-colors">
+                <span className="material-symbols-outlined text-[16px]">remove</span>
               </button>
-              <span className="font-black text-sm">{quantity}</span>
-              <button onClick={handleAdd} className="w-8 h-8 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors">
-                <span className="material-symbols-outlined text-[20px]">add</span>
+              <span className="font-black text-[10px]">{quantity}</span>
+              <button onClick={handleAdd} className="w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded-md transition-colors">
+                <span className="material-symbols-outlined text-[16px]">add</span>
               </button>
             </div>
           ) : (
             <button 
               onClick={handleAdd}
               disabled={product.price <= 0}
-              className={`w-full h-10 rounded-xl border-2 font-black text-[11px] uppercase tracking-widest transition-all ${
+              className={`w-full h-8 rounded-lg border font-black text-[8px] uppercase tracking-widest transition-all ${
                 product.price > 0 
                 ? 'border-[#E5B80B] text-[#2D004C] bg-white hover:bg-[#E5B80B] active:scale-95 shadow-sm' 
                 : 'border-gray-100 text-gray-300 cursor-not-allowed opacity-50'
               }`}
             >
-              ADD TO CART
+              ADD
             </button>
           )}
         </div>
