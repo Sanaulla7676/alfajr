@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -22,6 +23,8 @@ export default function AdminLogin() {
         throw new Error("Only admin can access this page.");
       }
 
+      // Ensure the session persists locally (stay logged in)
+      await setPersistence(auth, browserLocalPersistence);
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/admin/dashboard");
     } catch (err) {
@@ -33,8 +36,12 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-surface-container-lowest flex items-center justify-center px-4 font-inter">
-      <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100 w-full max-w-md">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4 font-inter">
+      <Head>
+        <title>Alfajr Admin Portal</title>
+        <link rel="manifest" href="/manifest-admin.json" />
+      </Head>
+      <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-50 w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/">
             <h1 className="text-3xl font-black tracking-tighter text-violet-600 mb-2 cursor-pointer inline-block">Alfajr Super Mart</h1>
