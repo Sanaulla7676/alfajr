@@ -65,7 +65,7 @@ export default function AdminSettings() {
         const data = await response.json();
         setFormData(prev => ({
           ...prev,
-          banners: [...(prev.banners || []), data.url]
+          banners: [...(prev.banners || []), { url: data.url, name: '', price: '' }]
         }));
       };
     } catch (err) {
@@ -149,57 +149,59 @@ export default function AdminSettings() {
           <hr className="border-gray-100" />
 
           <div className="space-y-4">
-            <h4 className="font-h2">Hero Banner Package</h4>
-            <p className="text-body-sm text-outline">Configure the product package that is added to the cart when a user clicks "Buy Now" on the main banner.</p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-body-sm font-bold text-outline uppercase mb-1.5 ml-1">Hero Package Name</label>
-                <input 
-                  type="text" 
-                  name="heroPackageName"
-                  value={formData.heroPackageName || ""}
-                  onChange={handleInputChange}
-                  placeholder="e.g. Monthly Grocery Box"
-                  className="w-full bg-surface-container-low border-none rounded-2xl px-5 py-3.5 text-body-md focus:ring-2 focus:ring-primary outline-none transition-all"
-                />
-              </div>
-              <div>
-                <label className="block text-body-sm font-bold text-outline uppercase mb-1.5 ml-1">Hero Package Price (₹)</label>
-                <input 
-                  type="number" 
-                  name="heroPackagePrice"
-                  value={formData.heroPackagePrice || ""}
-                  onChange={handleInputChange}
-                  placeholder="e.g. 1999"
-                  className="w-full bg-surface-container-low border-none rounded-2xl px-5 py-3.5 text-body-md focus:ring-2 focus:ring-primary outline-none transition-all"
-                />
-              </div>
-            </div>
-          </div>
-
-          <hr className="border-gray-100" />
-
-          <div className="space-y-4">
             <h4 className="font-h4">Hero Section Banners</h4>
             <p className="text-body-sm text-outline">Upload banners to display in the sliding carousel on the homepage.</p>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {formData.banners && formData.banners.map((url, idx) => (
-                <div key={idx} className="relative group rounded-xl overflow-hidden border border-gray-100 bg-surface-container-low aspect-[21/9]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={url} alt={`Banner ${idx + 1}`} className="w-full h-full object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => removeBanner(idx)}
-                    className="absolute top-2 right-2 bg-error text-white w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 shadow-lg"
-                  >
-                    <span className="material-symbols-outlined text-sm">delete</span>
-                  </button>
-                </div>
-              ))}
+            <div className="grid grid-cols-1 gap-6">
+              {formData.banners && formData.banners.map((banner, idx) => {
+                const bannerObj = typeof banner === 'string' ? { url: banner, name: '', price: '' } : banner;
+                
+                const updateBannerField = (field, value) => {
+                  const newBanners = [...formData.banners];
+                  newBanners[idx] = { ...bannerObj, [field]: value };
+                  setFormData(prev => ({ ...prev, banners: newBanners }));
+                };
+
+                return (
+                  <div key={idx} className="bg-surface-container-low rounded-2xl p-4 border border-gray-100 flex flex-col md:flex-row gap-6 relative group">
+                    <div className="w-full md:w-1/3 aspect-[21/9] rounded-xl overflow-hidden border border-gray-100 bg-white">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={bannerObj.url} alt={`Banner ${idx + 1}`} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[10px] font-black text-outline uppercase mb-1.5 ml-1">Offer Name</label>
+                        <input 
+                          type="text" 
+                          value={bannerObj.name || ""}
+                          onChange={(e) => updateBannerField('name', e.target.value)}
+                          placeholder="e.g. Weekly Grocery Kit"
+                          className="w-full bg-white border-none rounded-xl px-4 py-2.5 text-body-sm focus:ring-2 focus:ring-primary outline-none transition-all"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-black text-outline uppercase mb-1.5 ml-1">Price (₹)</label>
+                        <input 
+                          type="number" 
+                          value={bannerObj.price || ""}
+                          onChange={(e) => updateBannerField('price', e.target.value)}
+                          placeholder="e.g. 1499"
+                          className="w-full bg-white border-none rounded-xl px-4 py-2.5 text-body-sm focus:ring-2 focus:ring-primary outline-none transition-all"
+                        />
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removeBanner(idx)}
+                      className="absolute -top-2 -right-2 bg-error text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all z-10"
+                    >
+                      <span className="material-symbols-outlined text-sm">delete</span>
+                    </button>
+                  </div>
+                );
+              })}
               
-              <label className="border-2 border-dashed border-primary/30 rounded-xl flex flex-col items-center justify-center aspect-[21/9] cursor-pointer hover:bg-primary/5 transition-colors group">
+              <label className="border-2 border-dashed border-primary/30 rounded-2xl flex flex-col items-center justify-center py-10 cursor-pointer hover:bg-primary/5 transition-colors group bg-white">
                 <input 
                   type="file" 
                   accept="image/jpeg, image/png, image/webp" 
@@ -212,8 +214,8 @@ export default function AdminSettings() {
                 ) : (
                   <>
                     <span className="material-symbols-outlined text-4xl text-primary/50 group-hover:text-primary transition-colors mb-2">add_photo_alternate</span>
-                    <span className="text-body-sm font-bold text-primary">Upload Banner</span>
-                    <span className="text-[10px] text-outline mt-1">Aspect ratio ~ 21:9 (e.g. 1200x500)</span>
+                    <span className="text-body-sm font-bold text-primary">Add New Banner</span>
+                    <span className="text-[10px] text-outline mt-1 text-center">Best size: 1200x500 (21:9)</span>
                   </>
                 )}
               </label>

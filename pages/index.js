@@ -15,13 +15,16 @@ export default function Home() {
   const [showNotification, setShowNotification] = useState(false);
 
   const handleBuyNow = () => {
-    if (settings?.heroPackageName && settings?.heroPackagePrice) {
-      // Add the custom Hero Package to cart as requested
+    const banner = settings?.banners?.[currentBanner];
+    const bannerObj = typeof banner === 'string' ? null : banner;
+
+    if (bannerObj?.name && bannerObj?.price) {
+      // Add the specific Hero Package for THIS banner to cart
       const heroPackage = {
-        id: 'hero-package-item', // Static ID so it replaces itself if added again
-        name: settings.heroPackageName,
-        price: parseFloat(settings.heroPackagePrice),
-        imageUrl: settings.banners?.[0] || "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=600&q=80",
+        id: `hero-package-${currentBanner}`, // Unique ID per banner
+        name: bannerObj.name,
+        price: parseFloat(bannerObj.price),
+        imageUrl: bannerObj.url,
         unit: "PACKAGE",
         quantity: 1
       };
@@ -31,7 +34,7 @@ export default function Home() {
       return;
     }
 
-    // Fallback: Add first 3 products of the first category to cart as a "bundle"
+    // Fallback if no specific banner package is set
     if (categories.length > 0) {
       const firstCat = categories[0];
       const bundleProducts = products.filter(p => p.categorySlug === firstCat.slug).slice(0, 3);
@@ -104,37 +107,40 @@ export default function Home() {
               className="flex transition-transform duration-700 ease-in-out h-full"
               style={{ transform: `translateX(-${currentBanner * 100}%)` }}
             >
-              {settings.banners.map((banner, idx) => (
-                <div key={idx} className="min-w-full h-full px-4 relative">
-                  <div className="w-full h-full relative rounded-[28px] overflow-hidden border-2 border-[#E5B80B]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img 
-                      src={banner} 
-                      alt={`Banner ${idx + 1}`} 
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                    <div className="absolute bottom-6 left-6 z-10 space-y-1">
-                      {settings.heroPackageName && (
-                        <div className="space-y-0.5">
-                          <span className="text-[#E5B80B] font-black text-[10px] uppercase tracking-[0.2em] block">SPECIAL OFFER</span>
-                          <h2 className="text-xl font-serif font-black text-white leading-tight">{settings.heroPackageName}</h2>
-                          <div className="flex items-center gap-2">
-                             <span className="text-[#E5B80B] font-black text-lg">₹{settings.heroPackagePrice}</span>
-                             <span className="text-white/40 text-[8px] uppercase font-bold tracking-widest bg-white/10 px-2 py-0.5 rounded-full">One Box</span>
+              {settings.banners.map((banner, idx) => {
+                const bannerObj = typeof banner === 'string' ? { url: banner, name: '', price: '' } : banner;
+                return (
+                  <div key={idx} className="min-w-full h-full px-4 relative">
+                    <div className="w-full h-full relative rounded-[28px] overflow-hidden border-2 border-[#E5B80B]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img 
+                        src={bannerObj.url} 
+                        alt={`Banner ${idx + 1}`} 
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                      <div className="absolute bottom-6 left-6 z-10 space-y-1 text-left">
+                        {bannerObj.name && (
+                          <div className="space-y-0.5">
+                            <span className="text-[#E5B80B] font-black text-[10px] uppercase tracking-[0.2em] block">SPECIAL OFFER</span>
+                            <h2 className="text-xl font-serif font-black text-white leading-tight">{bannerObj.name}</h2>
+                            <div className="flex items-center gap-2">
+                               <span className="text-[#E5B80B] font-black text-lg">₹{bannerObj.price}</span>
+                               <span className="text-white/40 text-[8px] uppercase font-bold tracking-widest bg-white/10 px-2 py-0.5 rounded-full">Package</span>
+                            </div>
                           </div>
-                        </div>
-                      )}
-                      <button 
-                        onClick={handleBuyNow}
-                        className="bg-[#E5B80B] text-[#2D004C] px-8 py-3 rounded-full font-black text-sm uppercase shadow-2xl active:scale-95 transition-all"
-                      >
-                        Buy Now
-                      </button>
+                        )}
+                        <button 
+                          onClick={handleBuyNow}
+                          className="bg-[#E5B80B] text-[#2D004C] px-8 py-3 rounded-full font-black text-sm uppercase shadow-2xl active:scale-95 transition-all mt-1"
+                        >
+                          Buy Now
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         ) : (
