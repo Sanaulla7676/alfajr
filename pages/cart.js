@@ -20,25 +20,25 @@ export default function CartPage() {
 
   const handlePlaceOrder = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.phone || !formData.address) {
-      alert("Please fill in all delivery details.");
+    if (!formData.name || !formData.phone) {
+      alert("Please fill in your name and phone number.");
       return;
     }
 
     const whatsappNumber = settings.whatsappNumber || "+919449546882";
     
     let message = `🛒 *New Order — ${settings.storeName || "Alfajr Super Mart"}*\n━━━━━━━━━━━━━━━━\n`;
+    message += `🏪 *TYPE: STORE PICKUP*\n━━━━━━━━━━━━━━━━\n`;
     cart.forEach(item => {
       message += `- ${item.name} (${item.unit || "1 unit"}) × ${item.quantity} = ₹${(item.price * item.quantity)}\n`;
     });
     message += `━━━━━━━━━━━━━━━━\n`;
     message += `🧾 *Subtotal: ₹${cartTotal}*\n`;
-    message += `🚚 *Delivery: Free*\n`;
     message += `💰 *Total: ₹${cartTotal}*\n`;
     message += `━━━━━━━━━━━━━━━━\n`;
-    message += `👤 *Name:* ${formData.name}\n`;
+    message += `👤 *Customer:* ${formData.name}\n`;
     message += `📞 *Phone:* ${formData.phone}\n`;
-    message += `📍 *Address:* ${formData.address}\n`;
+    if (formData.address) message += `📝 *Note:* ${formData.address}\n`;
     message += `━━━━━━━━━━━━━━━━\n`;
     message += `_Sent from ${settings.storeName || "Alfajr Super Mart"}_`;
 
@@ -139,7 +139,11 @@ export default function CartPage() {
         {/* Checkout Form */}
         <div className="lg:w-[420px]">
           <div className="bg-white rounded-[32px] shadow-2xl border border-gray-50 p-8 sticky top-[100px]">
-            <h3 className="text-2xl font-serif font-black text-[#2D004C] mb-8">Delivery Details</h3>
+            <div className="flex items-center gap-3 mb-6 bg-[#E5B80B]/10 p-3 rounded-2xl border border-[#E5B80B]/20">
+               <span className="material-symbols-outlined text-[#2D004C]">store</span>
+               <span className="text-[10px] font-black text-[#2D004C] uppercase tracking-widest">Store Pickup Only</span>
+            </div>
+            <h3 className="text-2xl font-serif font-black text-[#2D004C] mb-8">Pickup Details</h3>
             
             <form onSubmit={handlePlaceOrder} className="space-y-6">
               <div className="space-y-1">
@@ -167,14 +171,13 @@ export default function CartPage() {
                 />
               </div>
               <div className="space-y-1">
-                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] ml-2">Full Address</label>
+                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] ml-2">Note (Optional)</label>
                 <textarea 
                   name="address"
                   value={formData.address}
                   onChange={handleInputChange}
-                  required
-                  rows="3"
-                  placeholder="Enter your complete address"
+                  rows="2"
+                  placeholder="Any instructions for store pickup?"
                   className="w-full bg-gray-50 border-2 border-transparent focus:border-[#E5B80B] rounded-2xl px-5 py-3.5 text-sm font-bold text-[#2D004C] outline-none resize-none transition-all"
                 ></textarea>
               </div>
@@ -185,8 +188,8 @@ export default function CartPage() {
                   <span className="font-black text-[#2D004C]">₹{cartTotal}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="font-bold text-gray-500 uppercase tracking-widest text-[10px]">Delivery</span>
-                  <span className="text-[#E5B80B] font-black uppercase tracking-widest text-[10px]">FREE</span>
+                  <span className="font-bold text-gray-500 uppercase tracking-widest text-[10px]">Method</span>
+                  <span className="text-[#E5B80B] font-black uppercase tracking-widest text-[10px]">STORE PICKUP</span>
                 </div>
                 <div className="h-px bg-[#2D004C]/10"></div>
                 <div className="flex justify-between items-center">

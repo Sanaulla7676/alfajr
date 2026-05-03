@@ -20,7 +20,7 @@ export default function ProductCard({ product }) {
   return (
     <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 transition-all flex flex-col group h-full overflow-hidden ${quantity > 0 ? 'border-[#E5B80B]' : 'hover:border-[#E5B80B]/30'}`}>
       {/* Product Image */}
-      <div className="relative aspect-square bg-[#F8F8F8] overflow-hidden group">
+      <div className="relative aspect-[3/4] bg-[#F8F8F8] overflow-hidden group">
         {discount > 0 && (
           <span className="absolute top-2 left-2 bg-[#2D004C] text-[#E5B80B] text-[8px] font-black px-1.5 py-0.5 rounded uppercase z-10">
             {discount}% OFF
@@ -30,7 +30,7 @@ export default function ProductCard({ product }) {
           <img 
             src={product.imageUrl} 
             alt={product.name}
-            className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full object-contain p-1 group-hover:scale-110 transition-transform duration-500"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-300 font-serif text-3xl">
@@ -40,7 +40,7 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* Content */}
-      <div className="p-1.5 lg:p-3 flex flex-col flex-1 gap-0.5">
+      <div className="p-1 lg:p-2 flex flex-col flex-1 gap-0.5">
         <h3 className="text-[9px] lg:text-xs font-bold text-[#2D004C] line-clamp-2 leading-tight min-h-[2.4em]">
           {product.name}
         </h3>
