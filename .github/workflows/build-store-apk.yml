@@ -8,25 +8,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Bubblewrap
-        run: npm install -g @bubblewrap/cli
-
-      - name: Build APK
+      - name: Generate APK via PWABuilder API
         run: |
-          bubblewrap init --manifest=https://alfajr-yr3u.vercel.app/manifest.json --directory=./store-apk --confirmResign=true
-          cd store-apk
-          bubblewrap build --skip-signing
+          curl -X POST "https://pwabuilder-cloud-apiv2.azurewebsites.net/api/Manifest/build" \
+          -H "Content-Type: application/json" \
+          -d '{"url":"https://alfajr-yr3u.vercel.app","platform":"android"}' \
+          -o store-app.zip
           
-      - name: Upload APK Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Alfajr-Store-APK
-          path: ./store-apk/*.apk
+          name: Alfajr-Store-Package
+          path: store-app.zip
