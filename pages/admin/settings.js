@@ -102,9 +102,9 @@ export default function AdminSettings() {
 
   return (
     <AdminLayout activePage="settings">
-      <div className="max-w-2xl mx-auto">
-        <form onSubmit={handleSubmit} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 space-y-6">
-          <h3 className="font-h3 mb-6">Store Configuration</h3>
+      <div className="max-w-2xl mx-auto pb-24">
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-[24px] shadow-[0_2px_8px_rgba(0,0,0,0.02)] border border-gray-50 space-y-6">
+          <h3 className="font-h2 mb-4">Store Configuration</h3>
           
           <div className="space-y-4">
             <div>

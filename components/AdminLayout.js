@@ -52,16 +52,25 @@ export default function AdminLayout({ children, activePage }) {
   return (
     <div className="min-h-screen bg-surface-container-low font-inter">
       {/* Mobile Header */}
-      <header className="lg:hidden sticky top-0 bg-white border-b border-gray-100 p-4 flex items-center justify-between z-[60] shadow-sm">
-        <Link href="/admin/dashboard">
-          <h2 className="text-xl font-black tracking-tighter text-violet-600 italic">Alfajr Admin</h2>
-        </Link>
-        <Link href="/">
-           <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-primary font-bold text-[10px] bg-primary-fixed border border-primary/10">
-              <span className="material-symbols-outlined text-[16px]">open_in_new</span>
-              STORE
-           </button>
-        </Link>
+      <header className="lg:hidden sticky top-0 bg-white border-b border-gray-50 p-4 flex items-center justify-between z-[60] shadow-sm">
+        <div className="flex items-center gap-2">
+          <Link href="/admin/dashboard">
+            <h2 className="text-lg font-black tracking-tight text-violet-600">Alfajr Admin</h2>
+          </Link>
+        </div>
+        
+        <h1 className="absolute left-1/2 -translate-x-1/2 text-body-lg font-bold text-on-surface capitalize">
+          {activePage === 'dashboard' ? 'Dashboard' : activePage?.replace('-', ' ')}
+        </h1>
+
+        <div className="flex items-center gap-3">
+          <button className="text-outline">
+            <span className="material-symbols-outlined text-[24px]">search</span>
+          </button>
+          <div className="w-8 h-8 bg-violet-100 rounded-full flex items-center justify-center text-[10px] font-black text-violet-600">
+            AD
+          </div>
+        </div>
       </header>
 
       <div className="flex flex-col lg:flex-row min-h-[calc(100vh-64px)] lg:min-h-screen">
@@ -75,7 +84,13 @@ export default function AdminLayout({ children, activePage }) {
           </div>
 
           <nav className="flex-1 px-4 space-y-1">
-            {menuItems.map((item) => (
+            {[
+              { name: "Dashboard", icon: "dashboard", href: "/admin/dashboard", id: "dashboard" },
+              { name: "Products", icon: "inventory_2", href: "/admin/products", id: "products" },
+              { name: "Categories", icon: "category", href: "/admin/categories", id: "categories" },
+              { name: "Add Product", icon: "add_circle", href: "/admin/add-product", id: "add-product" },
+              { name: "Settings", icon: "settings", href: "/admin/settings", id: "settings" }
+            ].map((item) => (
               <Link key={item.id} href={item.href}>
                 <div className={`flex items-center gap-3 p-3.5 rounded-2xl cursor-pointer transition-all ${
                   activePage === item.id ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-on-surface-variant hover:bg-surface-container font-medium'
@@ -106,7 +121,7 @@ export default function AdminLayout({ children, activePage }) {
         </aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 relative pb-20 lg:pb-0">
+        <main className="flex-1 relative pb-20 lg:pb-0 bg-surface-container-low">
           <header className="hidden lg:flex sticky top-0 bg-white/80 backdrop-blur-md border-b border-gray-100 p-4 items-center justify-between z-40">
             <h1 className="font-h2 text-on-surface capitalize">{activePage?.replace('-', ' ')}</h1>
           </header>
@@ -118,23 +133,24 @@ export default function AdminLayout({ children, activePage }) {
       </div>
 
       {/* Admin Bottom Navigation - Mobile Only */}
-      <nav className="lg:hidden fixed bottom-0 left-0 w-full z-[60] bg-white border-t border-gray-100 flex justify-around items-center py-2 pb-safe px-2">
-        {menuItems.map((item) => (
-          <Link key={item.id} href={item.href}>
-            <div className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl transition-all ${
+      <nav className="lg:hidden fixed bottom-0 left-0 w-full z-[60] bg-white border-t border-gray-100 flex justify-around items-center py-2 pb-safe px-2 h-16 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
+        {[
+          { name: "Dashboard", icon: "home", href: "/admin/dashboard", id: "dashboard" },
+          { name: "Products", icon: "inventory_2", href: "/admin/products", id: "products" },
+          { name: "Categories", icon: "layers", href: "/admin/categories", id: "categories" },
+          { name: "Settings", icon: "settings", href: "/admin/settings", id: "settings" }
+        ].map((item) => (
+          <Link key={item.id} href={item.href} className="flex-1">
+            <div className={`flex flex-col items-center gap-0.5 transition-all ${
               activePage === item.id ? 'text-primary' : 'text-gray-400'
             }`}>
-              <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: activePage === item.id ? "'FILL' 1" : "" }}>
+              <span className="material-symbols-outlined text-[26px]" style={{ fontVariationSettings: activePage === item.id ? "'FILL' 1" : "" }}>
                 {item.icon}
               </span>
-              <span className="text-[10px] font-bold">{item.name.split(' ')[0]}</span>
+              <span className="text-[10px] font-bold">{item.name}</span>
             </div>
           </Link>
         ))}
-        <button onClick={handleLogout} className="flex flex-col items-center gap-0.5 px-3 py-1 text-red-500">
-           <span className="material-symbols-outlined text-[24px]">logout</span>
-           <span className="text-[10px] font-bold">Exit</span>
-        </button>
       </nav>
     </div>
   );

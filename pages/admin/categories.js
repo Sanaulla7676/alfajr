@@ -81,11 +81,11 @@ export default function ManageCategories() {
   };
 
   if (loading) {
-    return <AdminLayout activePage="settings"><div>Loading categories...</div></AdminLayout>;
+    return <AdminLayout activePage="categories"><div>Loading categories...</div></AdminLayout>;
   }
 
   return (
-    <AdminLayout activePage="settings">
+    <AdminLayout activePage="categories">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -98,11 +98,11 @@ export default function ManageCategories() {
             className="bg-primary text-white px-8 py-3 rounded-2xl font-bold shadow-lg shadow-primary/20 active:scale-95 transition-all flex items-center gap-2"
           >
             {saving ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : <span className="material-symbols-outlined">save</span>}
-            SAVE CHANGES
+            SAVE
           </button>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-[24px] shadow-[0_2px_8px_rgba(0,0,0,0.02)] border border-gray-50 overflow-hidden">
           <div className="divide-y divide-gray-50">
             {categories.map((cat, index) => (
               <div key={cat.id} className="p-4 flex items-center justify-between gap-4 hover:bg-surface-container-lowest transition-colors">
