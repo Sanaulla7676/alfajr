@@ -99,42 +99,34 @@ export default function Home() {
         </div>
       )}
 
-      {/* Hero Section / Banner Carousel */}
-      <section className="bg-[#2D004C] pb-6 pt-2">
+      {/* Hero Section / Banner Carousel - 21:9 Aspect Ratio */}
+      <section className="bg-white py-4">
         {settings?.banners?.length > 0 ? (
-          <div className="relative overflow-hidden aspect-[21/11] md:aspect-[25/9]">
+          <div className="relative overflow-hidden aspect-[21/10] md:aspect-[25/9] px-4">
             <div 
-              className="flex transition-transform duration-700 ease-in-out h-full"
+              className="flex transition-transform duration-700 h-full"
               style={{ transform: `translateX(-${currentBanner * 100}%)` }}
             >
               {settings.banners.map((banner, idx) => {
                 const bannerObj = typeof banner === 'string' ? { url: banner, name: '', price: '' } : banner;
                 return (
-                  <div key={idx} className="min-w-full h-full px-4 relative">
-                    <div className="w-full h-full relative rounded-[28px] overflow-hidden border-2 border-[#E5B80B]">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <div key={idx} className="min-w-full h-full relative">
+                    <div className="w-full h-full relative rounded-[32px] overflow-hidden bg-[#F2F2F2]">
                       <img 
                         src={bannerObj.url} 
-                        alt={`Banner ${idx + 1}`} 
+                        alt={bannerObj.name || "Banner"} 
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                      <div className="absolute bottom-6 left-6 z-10 space-y-1 text-left">
-                        {bannerObj.name && (
-                          <div className="space-y-0.5">
-                            <span className="text-[#E5B80B] font-black text-[10px] uppercase tracking-[0.2em] block">SPECIAL OFFER</span>
-                            <h2 className="text-xl font-serif font-black text-white leading-tight">{bannerObj.name}</h2>
-                            <div className="flex items-center gap-2">
-                               <span className="text-[#E5B80B] font-black text-lg">₹{bannerObj.price}</span>
-                               <span className="text-white/40 text-[8px] uppercase font-bold tracking-widest bg-white/10 px-2 py-0.5 rounded-full">Package</span>
-                            </div>
-                          </div>
-                        )}
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/40 to-transparent"></div>
+                      <div className="absolute top-0 left-0 h-full flex flex-col justify-center p-8 w-1/2">
+                        <span className="font-label-caps text-on-surface-variant mb-1">Vegetable Offers</span>
+                        <h2 className="text-2xl font-h1 text-on-surface mb-2">{bannerObj.name || "20% OFF"}</h2>
+                        <p className="text-[10px] text-on-surface-variant font-bold mb-4">10 October, 2025</p>
                         <button 
                           onClick={handleBuyNow}
-                          className="bg-[#E5B80B] text-[#2D004C] px-8 py-3 rounded-full font-black text-sm uppercase shadow-2xl active:scale-95 transition-all mt-1"
+                          className="bg-primary text-white px-6 py-2.5 rounded-full font-black text-xs uppercase shadow-lg shadow-primary/20 active:scale-95 transition-all w-fit"
                         >
-                          Buy Now
+                          Get Now
                         </button>
                       </div>
                     </div>
@@ -142,83 +134,77 @@ export default function Home() {
                 );
               })}
             </div>
-          </div>
-        ) : (
-          <div className="px-4">
-            <div className="bg-[#2D004C] rounded-[28px] p-8 flex flex-col md:flex-row items-center justify-between overflow-hidden relative border-2 border-[#E5B80B] aspect-[21/11] text-white">
-              <div className="relative z-10 w-full md:w-3/5">
-                <span className="text-[#E5B80B] font-black text-xs uppercase tracking-[0.2em] mb-3 block">ALFAJR PREMIUM</span>
-                <h2 className="text-2xl md:text-4xl font-serif font-black mb-3 leading-tight text-white">
-                  {settings?.heroPackageName || "Grocery Plan"} - <span className="text-[#E5B80B]">₹{settings?.heroPackagePrice || "2250"}</span>
-                </h2>
-                <p className="text-white/60 text-[11px] mb-6 font-medium italic">"ALL ESSENTIAL ITEMS IN ONE BOX"</p>
-                <button 
-                  onClick={handleBuyNow}
-                  className="bg-[#E5B80B] text-[#2D004C] px-10 py-3.5 rounded-full font-black text-sm uppercase shadow-xl active:scale-95 transition-all"
-                >
-                  Buy Now
-                </button>
-              </div>
-              <div className="absolute right-0 top-0 h-full w-2/5 flex items-center justify-end opacity-40">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=600&q=80" alt="Groceries" className="h-full object-cover" />
-              </div>
+            {/* Carousel Indicators */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+              {settings.banners.map((_, idx) => (
+                <div key={idx} className={`w-1.5 h-1.5 rounded-full transition-all ${currentBanner === idx ? 'bg-primary w-4' : 'bg-on-surface-variant/20'}`}></div>
+              ))}
             </div>
           </div>
-        )}
+        ) : null}
       </section>
 
-      {/* Row 1: Horizontal Scroll of Category Names */}
-      <nav className="sticky top-[164px] bg-[#FDFCFE] z-40 py-4 flex items-center gap-3 overflow-x-auto scrollbar-hide px-4 border-b border-gray-100">
-        {categories.slice(0, 20).map((cat) => (
-          <Link key={cat.slug} href={`#${cat.slug}`}>
-            <button className="whitespace-nowrap px-6 py-2.5 rounded-full bg-white text-[#2D004C] font-bold text-[12px] border-2 border-[#E5B80B]/40 hover:border-[#E5B80B] shadow-sm transition-all active:scale-95 flex items-center gap-2">
-              <span className="text-lg leading-none">{cat.emoji}</span>
-              {cat.name}
-            </button>
-          </Link>
-        ))}
-      </nav>
+      {/* Category Icons - Horizontal Scroll */}
+      <section className="bg-white py-4 px-4">
+        <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
+          {categories.map((cat) => (
+            <Link key={cat.slug} href={`/category/${cat.slug}`}>
+              <div className="flex flex-col items-center gap-2 min-w-[70px]">
+                <div className="w-14 h-14 rounded-2xl bg-surface-variant/30 flex items-center justify-center border border-outline-variant transition-all hover:border-primary/30 active:scale-90">
+                  {cat.image ? (
+                    <img src={cat.image} alt={cat.name} className="w-full h-full object-cover rounded-2xl" />
+                  ) : (
+                    <span className="text-2xl">{cat.emoji}</span>
+                  )}
+                </div>
+                <span className="text-[11px] font-bold text-on-surface text-center line-clamp-1">{cat.name}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+        <button className="w-full mt-4 flex items-center justify-center gap-2 py-3 rounded-2xl bg-primary/5 text-primary font-bold text-[11px] active:scale-95 transition-all">
+          <span className="material-symbols-outlined text-[18px]">grid_view</span>
+          View More Categories
+        </button>
+      </section>
 
-      {/* Rows 2+: Categorized Product Sections (Horizontal Scrolling) */}
-      <div className="mt-8 space-y-12 pb-20">
-        {categories.slice(0, 20).map((cat) => {
-          const catProducts = products.filter(p => p.categorySlug === cat.slug).slice(0, 10);
+      {/* Top Grocery Stores */}
+      <section className="bg-white py-6">
+        <div className="flex items-center justify-between px-4 mb-4">
+          <h2 className="font-h2 text-on-surface">Top Grocery Stores</h2>
+          <span className="text-on-surface-variant/60 font-bold text-xs">View all</span>
+        </div>
+        <div className="flex gap-4 overflow-x-auto scrollbar-hide px-4">
+          {["Walmart", "Carrefour", "Lulu", "Nesto", "VIVA", "Al Maya"].map((store) => (
+            <div key={store} className="flex flex-col items-center gap-2">
+              <div className="w-14 h-14 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center p-3">
+                 <img src={`https://www.google.com/s2/favicons?sz=64&domain=${store.toLowerCase()}.com`} alt={store} className="w-full h-full object-contain opacity-70" />
+              </div>
+              <span className="text-[10px] font-bold text-on-surface-variant">{store}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Categorized Product Sections - 2 Column Grid */}
+      <div className="space-y-10 pb-20">
+        {categories.slice(0, 5).map((cat) => {
+          const catProducts = products.filter(p => p.categorySlug === cat.slug).slice(0, 4);
           if (catProducts.length === 0) return null;
           
           return (
-            <section key={cat.slug} id={cat.slug} className="scroll-mt-48">
-              <div className="flex items-center justify-between px-4 mb-5">
-                <h2 className="text-xl font-serif font-black text-[#2D004C] flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center overflow-hidden border-2 border-[#E5B80B]/20 shadow-sm">
-                    {cat.image ? (
-                      <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <span className="text-2xl">{cat.emoji}</span>
-                    )}
-                  </div>
-                  {cat.name}
-                </h2>
+            <section key={cat.slug}>
+              <div className="flex items-center justify-between px-4 mb-4">
+                <h2 className="font-h2 text-on-surface">Top {cat.name} 2025</h2>
                 <Link href={`/category/${cat.slug}`}>
-                  <span className="text-[#2D004C] font-black text-[11px] uppercase tracking-wider cursor-pointer hover:underline bg-[#E5B80B] px-4 py-1.5 rounded-full shadow-sm">View All</span>
+                  <span className="text-on-surface-variant/60 font-bold text-xs">View all</span>
                 </Link>
               </div>
               
-              <div className="flex items-stretch gap-2 overflow-x-auto scrollbar-hide px-4 pb-4">
+              <div className="grid grid-cols-2 gap-3 px-4">
                 {catProducts.map((product) => (
-                  <div key={product.id} className="min-w-[130px] max-w-[130px]">
-                    <ProductCard product={product} />
-                  </div>
+                  <ProductCard key={product.id} product={product} />
                 ))}
-                {/* View More Card */}
-                <Link href={`/category/${cat.slug}`}>
-                   <div className="min-w-[110px] flex flex-col items-center justify-center bg-white rounded-2xl border-2 border-dashed border-[#E5B80B]/40 cursor-pointer hover:bg-[#E5B80B]/5 transition-colors aspect-square">
-                      <div className="w-8 h-8 rounded-full bg-[#2D004C] flex items-center justify-center shadow-md mb-1">
-                         <span className="material-symbols-outlined text-[#E5B80B] text-sm">arrow_forward</span>
-                      </div>
-                      <span className="text-[8px] font-black text-[#2D004C] uppercase tracking-wider">More</span>
-                   </div>
-                </Link>
               </div>
             </section>
           );

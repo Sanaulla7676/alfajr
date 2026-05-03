@@ -1,0 +1,5 @@
+- [ ] Update `globals.css` with new green/white theme
+- [ ] Redesign `ProductCard.js` for 2-column layout & green (+) button
+- [ ] Update `Layout.js` header (search) and footer navigation
+- [ ] Overhaul `index.js` (Hero, Categories, Store Logos)
+- [ ] Sync Category and Search pages to 2-column grid

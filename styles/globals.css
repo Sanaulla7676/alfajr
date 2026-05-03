@@ -2,66 +2,33 @@
 
 @layer base {
   :root {
-    --primary: #6400d1;
+    --primary: #4CAF50; /* Modern Grocery Green */
     --on-primary: #ffffff;
-    --primary-container: #8025fb;
-    --on-primary-container: #ebdcff;
-    --primary-fixed: #ebdcff;
-    --on-primary-fixed: #260058;
-    --on-primary-fixed-variant: #5d00c2;
-    --primary-fixed-dim: #d4bbff;
-
-    --secondary: #615c69;
+    --primary-container: #e8f5e9;
+    --on-primary-container: #2e7d32;
+    
+    --secondary: #2D004C; /* Keep for brand accents */
     --on-secondary: #ffffff;
-    --secondary-container: #e1dae9;
-    --on-secondary-container: #645f6b;
-    --secondary-fixed: #e7e0ee;
-    --on-secondary-fixed: #1d1a24;
-    --on-secondary-fixed-variant: #494550;
-    --secondary-fixed-dim: #cbc4d2;
+    
+    --background: #f8f9fa;
+    --on-background: #1e1b1e;
 
-    --tertiary: #803700;
-    --on-tertiary: #ffffff;
-    --tertiary-container: #a64900;
-    --on-tertiary-container: #ffdbca;
-    --tertiary-fixed: #ffdbca;
-    --on-tertiary-fixed: #331200;
-    --on-tertiary-fixed-variant: #773200;
-    --tertiary-fixed-dim: #ffb68f;
+    --surface: #ffffff;
+    --on-surface: #1e1b1e;
+    --surface-variant: #f1f3f4;
+    --on-surface-variant: #444746;
+    
+    --outline: #dadce0;
+    --outline-variant: #ebebeb;
 
-    --error: #ba1a1a;
-    --on-error: #ffffff;
-    --error-container: #ffdad6;
-    --on-error-container: #93000a;
-
-    --background: #fef7ff;
-    --on-background: #1e1a25;
-
-    --surface: #fef7ff;
-    --on-surface: #1e1a25;
-    --surface-variant: #e8dfef;
-    --on-surface-variant: #4b4456;
-    --outline: #7c7388;
-    --outline-variant: #cdc2d9;
-
-    --inverse-surface: #332e3a;
-    --inverse-on-surface: #f7edfe;
-    --inverse-primary: #d4bbff;
-
-    --surface-dim: #e0d7e7;
-    --surface-bright: #fef7ff;
     --surface-container-lowest: #ffffff;
-    --surface-container-low: #f9f0ff;
-    --surface-container: #f4eafb;
-    --surface-container-high: #eee5f5;
-    --surface-container-highest: #e8dfef;
-    --surface-tint: #7916f5;
+    --surface-container-low: #f8f9fa;
+    --surface-container: #f1f3f4;
+    --surface-container-high: #e8eaed;
+    --surface-container-highest: #dee1e5;
 
-    --radius-lg: 0.5rem;
-    --radius-xl: 0.75rem;
-
-    --brand-primary: #2D004C;
-    --brand-gold: #E5B80B;
+    --radius-lg: 1.5rem; /* More rounded as per image */
+    --radius-xl: 2rem;
   }
 }
 
@@ -70,33 +37,9 @@
   --color-on-primary: var(--on-primary);
   --color-primary-container: var(--primary-container);
   --color-on-primary-container: var(--on-primary-container);
-  --color-primary-fixed: var(--primary-fixed);
-  --color-on-primary-fixed: var(--on-primary-fixed);
-  --color-on-primary-fixed-variant: var(--on-primary-fixed-variant);
-  --color-primary-fixed-dim: var(--primary-fixed-dim);
 
   --color-secondary: var(--secondary);
   --color-on-secondary: var(--on-secondary);
-  --color-secondary-container: var(--secondary-container);
-  --color-on-secondary-container: var(--on-secondary-container);
-  --color-secondary-fixed: var(--secondary-fixed);
-  --color-on-secondary-fixed: var(--on-secondary-fixed);
-  --color-on-secondary-fixed-variant: var(--on-secondary-fixed-variant);
-  --color-secondary-fixed-dim: var(--secondary-fixed-dim);
-
-  --color-tertiary: var(--tertiary);
-  --color-on-tertiary: var(--on-tertiary);
-  --color-tertiary-container: var(--tertiary-container);
-  --color-on-tertiary-container: var(--on-tertiary-container);
-  --color-tertiary-fixed: var(--tertiary-fixed);
-  --color-on-tertiary-fixed: var(--on-tertiary-fixed);
-  --color-on-tertiary-fixed-variant: var(--on-tertiary-fixed-variant);
-  --color-tertiary-fixed-dim: var(--tertiary-fixed-dim);
-
-  --color-error: var(--error);
-  --color-on-error: var(--on-error);
-  --color-error-container: var(--error-container);
-  --color-on-error-container: var(--on-error-container);
 
   --color-background: var(--background);
   --color-on-background: var(--on-background);
@@ -105,58 +48,44 @@
   --color-on-surface: var(--on-surface);
   --color-surface-variant: var(--surface-variant);
   --color-on-surface-variant: var(--on-surface-variant);
+  
   --color-outline: var(--outline);
   --color-outline-variant: var(--outline-variant);
-
-  --color-inverse-surface: var(--inverse-surface);
-  --color-inverse-on-surface: var(--inverse-on-surface);
-  --color-inverse-primary: var(--inverse-primary);
-
-  --color-surface-dim: var(--surface-dim);
-  --color-surface-bright: var(--surface-bright);
-  --color-surface-container-lowest: var(--surface-container-lowest);
-  --color-surface-container-low: var(--surface-container-low);
-  --color-surface-container: var(--surface-container);
-  --color-surface-container-high: var(--surface-container-high);
-  --color-surface-container-highest: var(--surface-container-highest);
-  --color-surface-tint: var(--surface-tint);
 
   --font-inter: "Inter", sans-serif;
   --font-serif: "Playfair Display", serif;
   
-  --spacing-container-padding: 12px;
-  --spacing-card-gutter: 8px;
+  --spacing-container-padding: 16px;
+  --spacing-card-gutter: 12px;
 }
 
 @layer utilities {
   .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
     vertical-align: middle;
   }
   
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
   
-  .font-body-md { font-size: 14px; line-height: 20px; font-weight: 400; }
-  .font-body-sm { font-size: 12px; line-height: 16px; font-weight: 400; }
-  .font-body-lg { font-size: 16px; line-height: 24px; font-weight: 400; }
-  .font-h1 { font-size: 22px; line-height: 28px; font-weight: 700; }
-  .font-h2 { font-size: 18px; line-height: 24px; font-weight: 700; }
-  .font-h3 { font-size: 16px; line-height: 20px; font-weight: 600; }
-  .font-price-lg { font-size: 16px; line-height: 20px; font-weight: 700; }
-  .font-price-sm { font-size: 12px; line-height: 14px; font-weight: 600; }
-  .font-label-caps { font-size: 10px; line-height: 12px; letter-spacing: 0.05em; font-weight: 700; }
+  /* Typography from Image */
+  .font-body-md { font-size: 14px; line-height: 20px; font-weight: 500; }
+  .font-body-sm { font-size: 11px; line-height: 16px; font-weight: 500; }
+  .font-h1 { font-size: 24px; line-height: 32px; font-weight: 800; }
+  .font-h2 { font-size: 18px; line-height: 24px; font-weight: 800; }
+  .font-price { font-size: 16px; line-height: 20px; font-weight: 800; }
+  .font-label-caps { font-size: 10px; line-height: 12px; letter-spacing: 0.1em; font-weight: 800; }
 
-  .card-mobile {
-    @apply bg-white rounded-[24px] border border-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.04)];
+  .card-modern {
+    @apply bg-white rounded-[24px] shadow-[0_4px_12px_rgba(0,0,0,0.03)] border border-gray-50;
   }
 
-  .font-serif {
-    font-family: var(--font-serif);
+  .btn-add {
+    @apply w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center shadow-lg active:scale-90 transition-all;
   }
 }
 
 body {
-  @apply bg-surface-container-lowest text-on-surface antialiased font-inter;
+  @apply bg-background text-on-background antialiased font-inter;
   font-size: 14px;
 }
